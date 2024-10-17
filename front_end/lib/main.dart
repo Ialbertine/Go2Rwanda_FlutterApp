@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import './auth/login.dart';
 import './auth/register.dart';
 import './pages/landingpage.dart';
+import './pages/shopinfo.dart';
+import './pages/accomodation.dart';
+import './pages/nationalpark.dart';
+import './pages/lakes.dart'; // Import the correct file
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +17,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Go2Rwanda',
       theme: ThemeData(
@@ -35,6 +38,11 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
+        '/infoshop': (context) => const ShoppingDiningScreen(),
+        '/lakes': (context) => const LakeScreen(),
+        '/nationalpark': (context) => const Nationalpark(),
+        '/accomodation': (context) => const Accomodation(),
+        '/': (context) => const LandingPage(),
       },
     );
   }
