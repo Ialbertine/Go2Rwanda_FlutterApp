@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_super_parameters
 
 import 'package:flutter/material.dart';
+
 
 class LandingPage extends StatelessWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -8,54 +9,69 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox.expand( // This ensures the container expands to fill the screen
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/Homepage.jpg'),
-              fit: BoxFit.cover, // Cover the whole background with the image
-              alignment: Alignment.center, // Ensures the image is centered
-            ),
-          ),
-          child: Center( // Ensures the content is centered both horizontally and vertically
-            child: Container(
-              padding: EdgeInsets.all(20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min, // Center the column content vertically
-                crossAxisAlignment: CrossAxisAlignment.center, // Center the column content horizontally
-                children: [
-                  Text(
-                    'Go2Rwanda',
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Travel  |  Discover  |  the beauty',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/register'); // Navigate to register page
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.black,
-                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                    ),
-                    child: Text('Get Started'),
-                  ),
-                ],
+      body: SizedBox.expand( 
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/waterfall.jpg'),
+                  fit: BoxFit.cover, 
+                  alignment: Alignment.center, 
+                ),
               ),
             ),
-          ),
+            Container( // color background container
+              color: const Color.fromARGB(255, 57, 88, 58).withOpacity(0.5), // Black background with 50% opacity
+            ),
+            Center( // Centered container
+              child: Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min, 
+                  crossAxisAlignment: CrossAxisAlignment.center, 
+                  children: [
+                    Text(
+                      'Go2Rwanda',
+                      style: TextStyle(
+                        fontSize: 50, 
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 20), 
+                    Text(
+                      'Travel  |  Discover  |  the beauty',
+                      style: TextStyle(
+                        fontSize: 22, 
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 70), 
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/register'); 
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: Colors.black,
+                          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15), 
+                        ),
+                        child: Text(
+                          'Get Started',
+                          style: TextStyle(
+                            fontSize: 20, 
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
