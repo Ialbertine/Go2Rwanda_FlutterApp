@@ -57,7 +57,7 @@ class LandingPage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           foregroundColor: Colors.black,
-                          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15), // Adjusted padding
+                          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15), 
                         ),
                         child: Text(
                           'Get Started',
