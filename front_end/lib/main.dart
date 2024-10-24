@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import './auth/login.dart';
 import './auth/register.dart';
 import './pages/landingpage.dart';
-import 'pages/accomodation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Go2Rwanda',
+      debugShowCheckedModeBanner: false, 
       theme: ThemeData(
         primarySwatch: Colors.green,
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -31,10 +31,10 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home:MyAppAccom(),
+      home: const LandingPage(),
       routes: {
         '/login': (context) => const LoginPage(),
-        '/register': (context) => MyAppAccom(),
+        '/register': (context) => const RegisterPage(),
       },
     );
   }
