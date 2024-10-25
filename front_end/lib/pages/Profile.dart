@@ -114,20 +114,25 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {},
-                            child: Text("Edit Profile"),
+                            child: Text(
+                              "Edit Profile",
+                              style: TextStyle(
+                                  color:
+                                      Colors.white), // Set text color to white
+                            ),
                           ),
                         ],
                       ),
                     ),
                     // Profile Image
-                    Positioned(
-                      top: 50,
-                      left: MediaQuery.of(context).size.width / 2 - 50,
+                    Center(
+                      // top: 50,
+                      // left: MediaQuery.of(context).size.width / 2 - 50,
                       child: CircleAvatar(
                         radius: 50,
                         backgroundImage: AssetImage(
                             'assets/legacy.jpg'), // Ensure the path is correct
-                        backgroundColor: Colors.green,
+                        // backgroundColor: Colors.green,
                       ),
                     ),
                   ],
@@ -181,6 +186,7 @@ class ProfilePage extends StatelessWidget {
         fillColor: Colors.white,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.white),
         ),
       ),
     );
