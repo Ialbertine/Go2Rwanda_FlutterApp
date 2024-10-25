@@ -212,7 +212,7 @@ class _AccommodationState extends State<Accommodation> {
             ),
           ],
           currentIndex: _selectedIndex,
-          backgroundColor: Colors.green,
+          backgroundColor:const Color.fromARGB(255, 57, 88, 58).withOpacity(0.5),
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white70,
           onTap: _onItemTapped,
