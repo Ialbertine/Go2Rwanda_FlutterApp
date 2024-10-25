@@ -28,41 +28,41 @@ class _AccommodationState extends State<Nationalparks> {
   
   final List<AccommodationItem> accommodations = [
     AccommodationItem(
-      title: "Cleo Hotel",
-      image: "assets/cleo.jpg",
+      title: "Akagera",
+      image: "assets/akageranational.jpg",
       bookBtn: "Book",
       rating: "View more",
     ),
     AccommodationItem(
-      title: "Grand Legacy hotel",
-      image: "assets/grandlegacy.jpg",
+      title: "Nyungwe",
+      image: "assets/nyungwe national park.jpg",
       bookBtn: "Book",
       rating: "view more",
     ),
     AccommodationItem(
-      title: "Lemigo hotel",
-      image: "assets/lemigohotel.webp",
+      title: "Volcano parks",
+      image: "assets/volcanonational park.jpg",
       bookBtn: "Book",
       rating: "view more",
     ),
     AccommodationItem(
-      title: "Betany Hotel",
-      image: "assets/Betanyhotel.jpg",
+      title: "Gishwati",
+      image: "assets/gishwati.jpg",
       bookBtn: "Book",
       rating: "view more",
     ),
-    AccommodationItem(
-      title: "Serena Hotel",
-      image: "assets/kigaliserena.jpg",
-      bookBtn: "Book",
-      rating: "view more",
-    ),
-    AccommodationItem(
-      title: "Marriot Hotel",
-      image: "assets/Marriot.jpg",
-      bookBtn: "Book",
-      rating: "view more",
-    ),
+    // AccommodationItem(
+    //   title: "Serena Hotel",
+    //   image: "assets/kigaliserena.jpg",
+    //   bookBtn: "Book",
+    //   rating: "view more",
+    // ),
+    // AccommodationItem(
+    //   title: "Marriot Hotel",
+    //   image: "assets/Marriot.jpg",
+    //   bookBtn: "Book",
+    //   rating: "view more",
+    // ),
   ];
 
   void _onItemTapped(int index) {
