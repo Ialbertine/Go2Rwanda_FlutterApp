@@ -52,7 +52,7 @@ class LandingPage extends StatelessWidget {
                       width: double.infinity,
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/accomodation'); 
+                          Navigator.pushNamed(context, '/nationalpark'); 
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,

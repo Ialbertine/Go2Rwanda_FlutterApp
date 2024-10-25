@@ -1,5 +1,6 @@
 // ignore_for_file: use_super_parameters
 import 'package:flutter/material.dart';
+import 'package:front_end/pages/nationalparks.dart';
 import './auth/login.dart';
 import './auth/register.dart';
 import './pages/landingpage.dart';
@@ -38,7 +39,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/homepage': (context) => const HomePage(),
-        '/accomodation':(context)=>const MyAppAccom()
+        '/accomodation':(context)=>const MyAppAccom(),
+        '/nationalpark':(context)=>const Nationalpark()
 
       },
     );
