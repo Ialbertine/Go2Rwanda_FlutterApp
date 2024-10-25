@@ -4,6 +4,7 @@ import './auth/login.dart';
 import './auth/register.dart';
 import './pages/landingpage.dart';
 import './pages/homepage.dart';
+import './pages/accomodation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,6 +38,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/homepage': (context) => const HomePage(),
+        '/accomodation':(context)=>const MyAppAccom()
+
       },
     );
   }

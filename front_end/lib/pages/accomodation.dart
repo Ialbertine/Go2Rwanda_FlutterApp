@@ -11,9 +11,7 @@ class MyAppAccom extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Accommodation(),
-      ),
+      home: Accommodation(),
     );
   }
 }
@@ -26,6 +24,8 @@ class Accommodation extends StatefulWidget {
 }
 
 class _AccommodationState extends State<Accommodation> {
+  int _selectedIndex = 0; // Track selected footer item
+  
   final List<AccommodationItem> accommodations = [
     AccommodationItem(
       title: "Cleo Hotel",
@@ -65,118 +65,159 @@ class _AccommodationState extends State<Accommodation> {
     ),
   ];
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Stack(
-          children: [
-            // Background Image Section
-            Container(
-              height: 250, // Increased height for overlap
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/cleo-hotel-lake-kivu.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-
-            // Overlay Text
-            Positioned(
-              top: 100, // Adjust position as needed
-              left: 60, // Adjust position as needed
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: const Text(
-                  'Accommodation',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
+    return Scaffold(
+      body: Stack(
+        children: [
+          Stack(
+            children: [
+              // Background Image Section
+              Container(
+                height: 250,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/cleo-hotel-lake-kivu.jpg'),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
-            ),
 
-            // App Bar
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: AppBar(
-                backgroundColor: Colors.green,
-                elevation: 0,
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.white),
-                  onPressed: () {
-                    // Handle back action
-                  },
+              // Overlay Text
+              Positioned(
+                top: 100,
+                left: 60,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: const Text(
+                    'Accommodation',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-                actions: [
-                  IconButton(
-                    icon: const Icon(Icons.menu, color: Colors.white),
+              ),
+
+              // App Bar
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: AppBar(
+                  backgroundColor: Colors.green,
+                  elevation: 0,
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
                     onPressed: () {
-                      // Handle menu action
+                      // Handle back action
                     },
                   ),
-                ],
-              ),
-            ),
-          ],
-        ),
-
-        // Main Content with Overlap
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 190), // Adjust this for overlap amount
-              Padding(
-                padding: const EdgeInsets.all(20.0), // Add padding here
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.all(Radius.circular(30)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
-                        offset: const Offset(0, -5),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Grid of Cards
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.75,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
-                          ),
-                          itemCount: accommodations.length,
-                          itemBuilder: (context, index) {
-                            return AccommodationCard(
-                                item: accommodations[index]);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                  actions: [
+                    IconButton(
+                      icon: const Icon(Icons.menu, color: Colors.white),
+                      onPressed: () {
+                        // Handle menu action
+                      },
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
+
+          // Main Content with Overlap
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 190),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.all(Radius.circular(30)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 10,
+                          offset: const Offset(0, -5),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Grid of Cards
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.75,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                            ),
+                            itemCount: accommodations.length,
+                            itemBuilder: (context, index) {
+                              return AccommodationCard(item: accommodations[index]);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                // Add extra padding at the bottom for the navigation bar
+                const SizedBox(height: 70),
+              ],
+            ),
+          ),
+        ],
+      ),
+      // Add the bottom navigation bar
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.green,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              offset: const Offset(0, -5),
+            ),
+          ],
         ),
-      ],
+        child: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Search',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          backgroundColor: Colors.green,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white70,
+          onTap: _onItemTapped,
+        ),
+      ),
     );
   }
 }
@@ -219,15 +260,14 @@ class AccommodationCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(15)),
                   image: DecorationImage(
-                    image: AssetImage(item.image), // Use item.image here
+                    image: AssetImage(item.image),
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
               Container(
                 decoration: BoxDecoration(
-                  color:
-                      Colors.black.withOpacity(0.1), // Adjust opacity as needed
+                  color: Colors.black.withOpacity(0.1),
                   borderRadius: const BorderRadius.all(Radius.circular(15)),
                 ),
               ),
@@ -282,12 +322,9 @@ class AccommodationCard extends StatelessWidget {
                   child: TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor: const Color(0xFF025719),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 14,
-                          horizontal: 20), // Add padding to the button
+                      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                       shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(
-                            20)), // Optional: Add rounded corners
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                     ),
                     onPressed: () {
