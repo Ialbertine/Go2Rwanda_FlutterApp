@@ -112,7 +112,7 @@ class _AccommodationState extends State<Accommodation> {
                 left: 0,
                 right: 0,
                 child: AppBar(
-                  backgroundColor: Colors.green,
+                  backgroundColor:const Color(0xFF025719),
                   elevation: 0,
                   leading: IconButton(
                     icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -187,7 +187,7 @@ class _AccommodationState extends State<Accommodation> {
       // Add the bottom navigation bar
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.green,
+          color: const Color(0xFF025719),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
@@ -212,7 +212,7 @@ class _AccommodationState extends State<Accommodation> {
             ),
           ],
           currentIndex: _selectedIndex,
-          backgroundColor:const Color.fromARGB(255, 57, 88, 58).withOpacity(0.5),
+          backgroundColor:const Color(0xFF025719),
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white70,
           onTap: _onItemTapped,
