@@ -1,6 +1,67 @@
-// ignore_for_file: use_super_parameters, avoid_print, prefer_const_constructors
+// ignore_for_file: use_super_parameters, avoid_print, prefer_const_constructors, file_names, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+
+// Category Pages
+class AccommodationPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Accommodation'),
+        backgroundColor: Color(0xFF4CAF50),
+      ),
+      body: Center(
+        child: Text('Accommodation Details'),
+      ),
+    );
+  }
+}
+
+class NationalParksPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('National Parks'),
+        backgroundColor: Color(0xFF4CAF50),
+      ),
+      body: Center(
+        child: Text('National Parks Details'),
+      ),
+    );
+  }
+}
+
+class LakesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Lakes'),
+        backgroundColor: Color(0xFF4CAF50),
+      ),
+      body: Center(
+        child: Text('Lakes Details'),
+      ),
+    );
+  }
+}
+
+class ShoppingPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Shopping'),
+        backgroundColor: Color(0xFF4CAF50),
+      ),
+      body: Center(
+        child: Text('Shopping Details'),
+      ),
+    );
+  }
+}
 
 void main() {
   runApp(const MyApp());
@@ -70,6 +131,32 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // Function to handle category navigation
+  void _navigateToCategory(String category) {
+    Widget page;
+    switch (category) {
+      case 'Accommodation':
+        page = AccommodationPage();
+        break;
+      case 'National Parks':
+        page = NationalParksPage();
+        break;
+      case 'Lakes':
+        page = LakesPage();
+        break;
+      case 'Shopping':
+        page = ShoppingPage();
+        break;
+      default:
+        return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => page),
+    );
+  }
+
   Widget _buildHeader() {
     return Container(
       color: const Color(0xFF4CAF50),
@@ -95,7 +182,7 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          padding: EdgeInsets.symmetric(horizontal: 30.0),
           child: Text(
             'Select category',
             style: TextStyle(
@@ -110,10 +197,10 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildCategoryItem(Icons.apartment, 'Hotels'),
-              _buildCategoryItem(Icons.landscape, 'Places'),
-              _buildCategoryItem(Icons.shopping_cart, 'Cart'),
-              _buildCategoryItem(Icons.person_outline, 'Profile'),
+              _buildCategoryItem(Icons.apartment, 'Accommodation'),
+              _buildCategoryItem(Icons.landscape, 'National Parks'),
+              _buildCategoryItem(Icons.water, 'Lakes'),
+              _buildCategoryItem(Icons.shopping_cart, 'Shopping'),
             ],
           ),
         ),
@@ -122,23 +209,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCategoryItem(IconData icon, String label) {
-    return Container(
-      width: 70,
-      height: 70,
-      decoration: BoxDecoration(
-        color: const Color(0xFFE8F5E9),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: const Color(0xFF4CAF50)),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 12),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => _navigateToCategory(label),
+      child: Container(
+        width: 85,
+        height: 80,
+        decoration: BoxDecoration(
+          color: const Color(0xFFE8F5E9),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: const Color(0xFF4CAF50), size: 20),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: const TextStyle(fontSize: 11),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }
