@@ -1,93 +1,43 @@
-// ignore_for_file: use_super_parameters, unused_import
-import 'package:flutter/material.dart';
-import './auth/login.dart';
-import './auth/register.dart';
-import './pages/landingpage.dart';
-import './pages/Homepage.dart';
-import './pages/Accomodationpop.dart';
-import './pages/lake.dart';
-import './pages/shoppingpopup.dart';
-import './pages/Profile.dart';
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
 
-void main() {
-  runApp(const MyApp());
-}
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Go2Rwanda',
+      home: ProfilePage(),
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF2E7D32),
-            foregroundColor: Colors.white,
-          ),
-        ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-            foregroundColor: Colors.black,
-            side: const BorderSide(color: Colors.grey),
-          ),
-        ),
-      ),
-      home: const LandingPage(),
-      routes: {
-        '/login': (context) => const LoginPage(),
-        '/register': (context) => const RegisterPage(),
-        '/homepage': (context) => const HomePage(),
-        '/Accpopup': (context) => const AccommodationScreen(),
-        '/lakepopup': (context) => const Lake(),
-        '/shoppopup': (context) => const shopping(),
-        '/profile': (context) => const ProfilePage(),
-      },
     );
   }
 }
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
-
-  Widget buildTextField(String labelText, String placeholder) {
-    return TextField(
-      decoration: InputDecoration(
-        labelText: labelText,
-        hintText: placeholder,
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60.0),
+        preferredSize: Size.fromHeight(60.0), // Adjust the height of the AppBar
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.green[700],
+            color: Colors.green[700], // Green background for the AppBar
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                spreadRadius: 2,
-                blurRadius: 8,
-                offset: const Offset(0, 3),
+                color: Colors.black.withOpacity(0.3), // Shadow color
+                spreadRadius: 2, // Spread radius
+                blurRadius: 8, // Blur radius
+                offset: Offset(
+                    0, 3), // Offset to make the shadow visible at the bottom
               ),
             ],
           ),
           child: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            title: const Row(
+            backgroundColor:
+                Colors.transparent, // Transparent to show custom color
+            elevation: 0, // Remove default elevation
+            title: Row(
               children: [
                 Expanded(
                   child: Text(
@@ -103,9 +53,10 @@ class ProfilePage extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                icon: const Icon(Icons.menu),
+                icon: Icon(Icons.menu),
                 onPressed: () {},
-                color: Colors.white,
+                color: Colors
+                    .white, // Ensures the icon remains visible on green background
               ),
             ],
           ),
@@ -113,16 +64,17 @@ class ProfilePage extends StatelessWidget {
       ),
       body: Stack(
         children: [
+          // Background split into green and white (2/4)
           Column(
             children: [
               Expanded(
-                flex: 2,
+                flex: 2, // Green 50% of the screen
                 child: Container(
                   color: Colors.green[700],
                 ),
               ),
               Expanded(
-                flex: 4,
+                flex: 4, // White bottom 50% of the screen
                 child: Container(
                   color: Colors.white,
                 ),
@@ -135,8 +87,9 @@ class ProfilePage extends StatelessWidget {
                 Stack(
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 120, left: 20, right: 20),
-                      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                      margin: EdgeInsets.only(top: 120, left: 20, right: 20),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 30, horizontal: 20),
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(20),
@@ -144,15 +97,15 @@ class ProfilePage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          const SizedBox(height: 70),
+                          SizedBox(height: 70), // Space for the profile image
                           buildTextField("Full names", "Divine Birasa Ishimwe"),
-                          const SizedBox(height: 20),
+                          SizedBox(height: 20),
                           buildTextField("Address", "Kigali, Rwanda"),
-                          const SizedBox(height: 20),
+                          SizedBox(height: 20),
                           buildTextField("Contact", ""),
-                          const SizedBox(height: 20),
+                          SizedBox(height: 20),
                           buildTextField("Email", "hello@gmail.com"),
-                          const SizedBox(height: 20),
+                          SizedBox(height: 20),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.green[700],
@@ -161,18 +114,25 @@ class ProfilePage extends StatelessWidget {
                               ),
                             ),
                             onPressed: () {},
-                            child: const Text("Edit Profile"),
+                            child: Text(
+                              "Edit Profile",
+                              style: TextStyle(
+                                  color:
+                                      Colors.white), // Set text color to white
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    Positioned(
-                      top: 50,
-                      left: MediaQuery.of(context).size.width / 2 - 50,
-                      child: const CircleAvatar(
+                    // Profile Image
+                    Center(
+                      // top: 50,
+                      // left: MediaQuery.of(context).size.width / 2 - 50,
+                      child: CircleAvatar(
                         radius: 50,
-                        backgroundImage: AssetImage('assets/profile.jpg'),
-                        backgroundColor: Colors.green,
+                        backgroundImage: AssetImage(
+                            'assets/legacy.jpg'), // Ensure the path is correct
+                        // backgroundColor: Colors.green,
                       ),
                     ),
                   ],
@@ -186,10 +146,10 @@ class ProfilePage extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
-              spreadRadius: 5,
-              blurRadius: 10,
-              offset: const Offset(0, 3),
+              color: Colors.black.withOpacity(0.2), // Shadow color
+              spreadRadius: 5, // Spread radius of the shadow
+              blurRadius: 10, // How much the shadow will blur
+              offset: Offset(0, 3), // Changes position of shadow
             ),
           ],
         ),
@@ -197,7 +157,7 @@ class ProfilePage extends StatelessWidget {
           backgroundColor: Colors.green[700],
           selectedItemColor: Colors.white,
           unselectedItemColor: Colors.white70,
-          items: const [
+          items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: '',
@@ -211,6 +171,22 @@ class ProfilePage extends StatelessWidget {
               label: '',
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  // Custom TextField Builder
+  Widget buildTextField(String labelText, String placeholder) {
+    return TextField(
+      decoration: InputDecoration(
+        labelText: labelText,
+        hintText: placeholder,
+        filled: true,
+        fillColor: Colors.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.white),
         ),
       ),
     );
