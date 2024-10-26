@@ -1,4 +1,4 @@
-// ignore_for_file: use_super_parameters, unused_import
+// ignore_for_file: use_super_parameters, unused_import, use_key_in_widget_constructors, prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:front_end/pages/nationalparks.dart';
 import './auth/login.dart';
@@ -33,13 +33,15 @@ class MyApp extends StatelessWidget {
             foregroundColor: Colors.black,
             side: const BorderSide(color: Colors.grey),
           ),
-        ),
       ),
-      home: const LandingPage(),
+      ),
+
+    home: const LandingPage(),
       routes: {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/homepage': (context) => const HomePage(),
+        '/profile': (context) => ProfilePage(),
         '/accomodation':(context)=>const MyAppAccom(),
         '/nationalpark':(context)=>const Nationalpark()
 
