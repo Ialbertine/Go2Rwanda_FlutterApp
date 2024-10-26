@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyAppAccom());
-}
+// void main() {
+//   runApp(const MyAppAccom());
+// }
 
-class MyAppAccom extends StatelessWidget {
-  const MyAppAccom({super.key});
+// class MyAppAccom extends StatelessWidget {
+//   const MyAppAccom({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Accommodation(),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: Accommodation(),
+//     );
+//   }
+// }
 
 class Accommodation extends StatefulWidget {
   const Accommodation({super.key});
