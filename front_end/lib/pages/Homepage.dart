@@ -1,6 +1,70 @@
-// ignore_for_file: use_super_parameters, avoid_print, prefer_const_constructors
+// main.dart
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, use_super_parameters, deprecated_member_use, avoid_print
 
 import 'package:flutter/material.dart';
+import './Profile.dart';
+// import './Search.dart';
+
+// Keep your existing category pages
+class AccommodationPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Accommodation'),
+        backgroundColor: Color(0xFF4CAF50),
+      ),
+      body: Center(
+        child: Text('Accommodation Details'),
+      ),
+    );
+  }
+}
+
+class NationalParksPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('National Parks'),
+        backgroundColor: Color(0xFF4CAF50),
+      ),
+      body: Center(
+        child: Text('National Parks Details'),
+      ),
+    );
+  }
+}
+
+class LakesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Lakes'),
+        backgroundColor: Color(0xFF4CAF50),
+      ),
+      body: Center(
+        child: Text('Lakes Details'),
+      ),
+    );
+  }
+}
+
+class ShoppingPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Shopping'),
+        backgroundColor: Color(0xFF4CAF50),
+      ),
+      body: Center(
+        child: Text('Shopping Details'),
+      ),
+    );
+  }
+}
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +91,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  late Widget _currentPage;
 
   // List of place names and their images
   final List<Map<String, String>> places = [
@@ -49,24 +114,72 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeader(),
-            const SizedBox(height: 20),
-            _buildCategories(),
-            const SizedBox(height: 30),
-            _buildViewPlaces(),
-            const SizedBox(height: 20),
-            _buildHotelGrid(),
-          ],
-        ),
+  void initState() {
+    super.initState();
+    _currentPage = _buildMainContent();
+  }
+
+  Widget _buildMainContent() {
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildHeader(),
+          const SizedBox(height: 20),
+          _buildCategories(),
+          const SizedBox(height: 30),
+          _buildViewPlaces(),
+          const SizedBox(height: 20),
+          _buildHotelGrid(),
+        ],
       ),
-      bottomNavigationBar: _buildBottomNavBar(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        if (_selectedIndex != 0) {
+          setState(() {
+            _selectedIndex = 0;
+            _currentPage = _buildMainContent();
+          });
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: _currentPage,
+        bottomNavigationBar: _buildBottomNavBar(),
+      ),
+    );
+  }
+
+  // Function to handle category navigation
+  void _navigateToCategory(String category) {
+    Widget page;
+    switch (category) {
+      case 'Accommodation':
+        page = AccommodationPage();
+        break;
+      case 'National Parks':
+        page = NationalParksPage();
+        break;
+      case 'Lakes':
+        page = LakesPage();
+        break;
+      case 'Shopping':
+        page = ShoppingPage();
+        break;
+      default:
+        return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => page),
     );
   }
 
@@ -95,7 +208,7 @@ class _HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          padding: EdgeInsets.symmetric(horizontal: 30.0),
           child: Text(
             'Select category',
             style: TextStyle(
@@ -110,10 +223,10 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildCategoryItem(Icons.apartment, 'Hotels'),
-              _buildCategoryItem(Icons.landscape, 'Places'),
-              _buildCategoryItem(Icons.shopping_cart, 'Cart'),
-              _buildCategoryItem(Icons.person_outline, 'Profile'),
+              _buildCategoryItem(Icons.apartment, 'Accommodation'),
+              _buildCategoryItem(Icons.landscape, 'National Parks'),
+              _buildCategoryItem(Icons.water, 'Lakes'),
+              _buildCategoryItem(Icons.shopping_cart, 'Shopping'),
             ],
           ),
         ),
@@ -122,23 +235,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildCategoryItem(IconData icon, String label) {
-    return Container(
-      width: 70,
-      height: 70,
-      decoration: BoxDecoration(
-        color: const Color(0xFFE8F5E9),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: const Color(0xFF4CAF50)),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 12),
-          ),
-        ],
+    return GestureDetector(
+      onTap: () => _navigateToCategory(label),
+      child: Container(
+        width: 85,
+        height: 80,
+        decoration: BoxDecoration(
+          color: const Color(0xFFE8F5E9),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, color: const Color(0xFF4CAF50), size: 20),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: const TextStyle(fontSize: 11),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -260,6 +377,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      if (_selectedIndex == index) return;
+      
+      _selectedIndex = index;
+      switch (index) {
+        case 0:
+          _currentPage = _buildMainContent();
+          break;
+        case 1:
+          // _currentPage = SearchPage();  // Your existing Search page
+          break;
+        case 2:
+          _currentPage = ProfilePage();  // Your existing Profile page
+          break;
+      }
+    });
+  }
+
   Widget _buildBottomNavBar() {
     return Container(
       decoration: BoxDecoration(
@@ -277,23 +413,19 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildNavItem(Icons.home_outlined, 'Home', 0),
-            _buildNavItem(Icons.search, 'Search', 1),
-            _buildNavItem(Icons.person_outline, 'Profile', 2),
+            _buildNavItemNew(Icons.home_outlined, 'Home', 0),
+            _buildNavItemNew(Icons.search, 'Search', 1),
+            _buildNavItemNew(Icons.person_outline, 'Profile', 2),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, int index) {
+  Widget _buildNavItemNew(IconData icon, String label, int index) {
     final isSelected = _selectedIndex == index;
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedIndex = index;
-        });
-      },
+      onTap: () => _onItemTapped(index),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
