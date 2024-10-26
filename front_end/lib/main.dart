@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Go2Rwanda',
-      debugShowCheckedModeBanner: false, 
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.green,
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -33,18 +33,16 @@ class MyApp extends StatelessWidget {
             foregroundColor: Colors.black,
             side: const BorderSide(color: Colors.grey),
           ),
+        ),
       ),
-      ),
-
-    home: const LandingPage(),
+      home: const LandingPage(),
       routes: {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/homepage': (context) => const HomePage(),
         '/profile': (context) => ProfilePage(),
-        '/accomodation':(context)=>const MyAppAccom(),
-        '/nationalpark':(context)=>const Nationalpark()
-
+        '/accomodation': (context) => const MyAppAccom(),
+        '/nationalpark': (context) => const Nationalpark()
       },
     );
   }
