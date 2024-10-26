@@ -125,7 +125,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                             .showSnackBar(
                                           const SnackBar(
                                             content: Text(
-                                                'Profile updated successfully'),
+                                                'Profile updated successfully'), // Replace with your desired message
                                             backgroundColor: Color(0xFF2E7D32),
                                           ),
                                         );
