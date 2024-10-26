@@ -7,6 +7,8 @@ import './pages/landingpage.dart';
 import './pages/Homepage.dart';
 import './pages/accomodation.dart';
 import './pages/Profile.dart';
+import './pages/search_page.dart';
+import './pages/third_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Go2Rwanda',
-      debugShowCheckedModeBanner: false, 
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.green,
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -33,18 +35,18 @@ class MyApp extends StatelessWidget {
             foregroundColor: Colors.black,
             side: const BorderSide(color: Colors.grey),
           ),
+        ),
       ),
-      ),
-
-    home: const LandingPage(),
+      home: const LandingPage(),
       routes: {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/homepage': (context) => const HomePage(),
         '/profile': (context) => ProfilePage(),
-        '/accomodation':(context)=>const MyAppAccom(),
-        '/nationalpark':(context)=>const Nationalpark()
-
+        '/accomodation': (context) => const MyAppAccom(),
+        '/nationalpark': (context) => const Nationalpark(),
+        '/search': (context) => const HomeScreen(),
+        '/recent': (context) => ThirdPage()
       },
     );
   }
