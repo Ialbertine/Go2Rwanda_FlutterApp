@@ -1,8 +1,11 @@
-// ignore_for_file: use_super_parameters, avoid_print, prefer_const_constructors, file_names, use_key_in_widget_constructors
+// main.dart
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, use_super_parameters, deprecated_member_use, avoid_print
 
 import 'package:flutter/material.dart';
+import './Profile.dart';
+// import './Search.dart';
 
-// Category Pages
+// Keep your existing category pages
 class AccommodationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -88,6 +91,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  late Widget _currentPage;
 
   // List of place names and their images
   final List<Map<String, String>> places = [
@@ -110,24 +114,46 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeader(),
-            const SizedBox(height: 20),
-            _buildCategories(),
-            const SizedBox(height: 30),
-            _buildViewPlaces(),
-            const SizedBox(height: 20),
-            _buildHotelGrid(),
-          ],
-        ),
+  void initState() {
+    super.initState();
+    _currentPage = _buildMainContent();
+  }
+
+  Widget _buildMainContent() {
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildHeader(),
+          const SizedBox(height: 20),
+          _buildCategories(),
+          const SizedBox(height: 30),
+          _buildViewPlaces(),
+          const SizedBox(height: 20),
+          _buildHotelGrid(),
+        ],
       ),
-      bottomNavigationBar: _buildBottomNavBar(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        if (_selectedIndex != 0) {
+          setState(() {
+            _selectedIndex = 0;
+            _currentPage = _buildMainContent();
+          });
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: _currentPage,
+        bottomNavigationBar: _buildBottomNavBar(),
+      ),
     );
   }
 
@@ -351,6 +377,25 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      if (_selectedIndex == index) return;
+      
+      _selectedIndex = index;
+      switch (index) {
+        case 0:
+          _currentPage = _buildMainContent();
+          break;
+        case 1:
+          // _currentPage = SearchPage();  // Your existing Search page
+          break;
+        case 2:
+          _currentPage = ProfilePage();  // Your existing Profile page
+          break;
+      }
+    });
+  }
+
   Widget _buildBottomNavBar() {
     return Container(
       decoration: BoxDecoration(
@@ -368,23 +413,19 @@ class _HomePageState extends State<HomePage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildNavItem(Icons.home_outlined, 'Home', 0),
-            _buildNavItem(Icons.search, 'Search', 1),
-            _buildNavItem(Icons.person_outline, 'Profile', 2),
+            _buildNavItemNew(Icons.home_outlined, 'Home', 0),
+            _buildNavItemNew(Icons.search, 'Search', 1),
+            _buildNavItemNew(Icons.person_outline, 'Profile', 2),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, int index) {
+  Widget _buildNavItemNew(IconData icon, String label, int index) {
     final isSelected = _selectedIndex == index;
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedIndex = index;
-        });
-      },
+      onTap: () => _onItemTapped(index),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

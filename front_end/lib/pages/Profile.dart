@@ -1,138 +1,207 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_key_in_widget_constructors
+// ignore_for_file: library_private_types_in_public_api, use_super_parameters, file_names
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
 
-class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ProfilePage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
-class ProfilePage extends StatelessWidget {
+class _ProfilePageState extends State<ProfilePage> {
+  final _formKey = GlobalKey<FormState>();
+
+  late TextEditingController _fullNameController;
+  late TextEditingController _addressController;
+  late TextEditingController _contactController;
+  late TextEditingController _emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    _fullNameController = TextEditingController(text: "Divine Birasa Ishimwe");
+    _addressController = TextEditingController(text: "Kigali/Rwanda");
+    _contactController = TextEditingController(text: "0781234567");
+    _emailController = TextEditingController(text: "hello@gmail.com");
+  }
+
+  @override
+  void dispose() {
+    _fullNameController.dispose();
+    _addressController.dispose();
+    _contactController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0), // Adjust the height of the AppBar
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.green[700], // Green background for the AppBar
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.3), // Shadow color
-                spreadRadius: 2, // Spread radius
-                blurRadius: 8, // Blur radius
-                offset: Offset(
-                    0, 3), // Offset to make the shadow visible at the bottom
-              ),
-            ],
-          ),
-          child: AppBar(
-            backgroundColor:
-                Colors.transparent, // Transparent to show custom color
-            elevation: 0, // Remove default elevation
-            title: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    'Go2Rwanda',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
+      backgroundColor: Colors.white, // Bottom part remains white
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF2E7D32), // Green top section
+        elevation: 0,
+        title: const Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Go2Rwanda',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () {},
-                color: Colors
-                    .white, // Ensures the icon remains visible on green background
-              ),
-            ],
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.menu, color: Colors.white),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: Stack(
         children: [
-          // Background split into green and white (2/4)
-          Column(
-            children: [
-              Expanded(
-                flex: 2, // Green 50% of the screen
-                child: Container(
-                  color: Colors.green[700],
-                ),
-              ),
-              Expanded(
-                flex: 4, // White bottom 50% of the screen
-                child: Container(
-                  color: Colors.white,
-                ),
-              ),
-            ],
+          // Green section at the top
+          Container(
+            height: MediaQuery.of(context).size.height * 0.35,
+            color: const Color(0xFF2E7D32),
           ),
-          Center(
+          // White section for the rest of the body
+          Positioned.fill(
+            top: MediaQuery.of(context).size.height * 0.35,
+            child: Container(
+              color: Colors.white,
+            ),
+          ),
+          SingleChildScrollView(
             child: Column(
               children: [
+                const SizedBox(height: 70), // Space above profile image
                 Stack(
+                  alignment: Alignment.topCenter,
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 120, left: 20, right: 20),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          SizedBox(height: 70), // Space for the profile image
-                          buildTextField("Full names", "Divine Birasa Ishimwe"),
-                          SizedBox(height: 20),
-                          buildTextField("Address", "Kigali, Rwanda"),
-                          SizedBox(height: 20),
-                          buildTextField("Contact", ""),
-                          SizedBox(height: 20),
-                          buildTextField("Email", "hello@gmail.com"),
-                          SizedBox(height: 20),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green[700],
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            onPressed: () {},
-                            child: Text(
-                              "Edit Profile",
-                              style: TextStyle(
-                                  color:
-                                      Colors.white), // Set text color to white
+                    Padding(
+                      padding: const EdgeInsets.only(top: 60),
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 24),
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 209, 209, 209),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(24, 70, 24, 24),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildFormField(
+                                  title: 'Full names',
+                                  controller: _fullNameController,
+                                ),
+                                _buildFormField(
+                                  title: 'Address',
+                                  controller: _addressController,
+                                ),
+                                _buildFormField(
+                                  title: 'Contact',
+                                  controller: _contactController,
+                                  keyboardType: TextInputType.phone,
+                                ),
+                                _buildFormField(
+                                  title: 'Email',
+                                  controller: _emailController,
+                                  keyboardType: TextInputType.emailAddress,
+                                ),
+                                const SizedBox(height: 20),
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                                'Profile updated successfully'),
+                                            backgroundColor: Color(0xFF2E7D32),
+                                          ),
+                                        );
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF2E7D32),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Edit Profile',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                              ],
                             ),
                           ),
-                        ],
+                        ),
                       ),
                     ),
                     // Profile Image
-                    Center(
-                      // top: 50,
-                      // left: MediaQuery.of(context).size.width / 2 - 50,
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: AssetImage(
-                            'assets/legacy.jpg'), // Ensure the path is correct
-                        // backgroundColor: Colors.green,
+                    Positioned(
+                      top: 0,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 3,
+                              ),
+                              color: Colors.white,
+                            ),
+                            child: const CircleAvatar(
+                              radius: 45,
+                              backgroundColor: Color(0xFF2E7D32),
+                              child: Icon(
+                                Icons.person,
+                                size: 50,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              height: 32,
+                              width: 32,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  width: 2,
+                                  color: Colors.white,
+                                ),
+                                color: const Color(0xFF2E7D32),
+                              ),
+                              child: const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ],
@@ -142,53 +211,56 @@ class ProfilePage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.2), // Shadow color
-              spreadRadius: 5, // Spread radius of the shadow
-              blurRadius: 10, // How much the shadow will blur
-              offset: Offset(0, 3), // Changes position of shadow
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: Colors.green[700],
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white70,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: '',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: '',
-            ),
-          ],
-        ),
-      ),
     );
   }
 
-  // Custom TextField Builder
-  Widget buildTextField(String labelText, String placeholder) {
-    return TextField(
-      decoration: InputDecoration(
-        labelText: labelText,
-        hintText: placeholder,
-        filled: true,
-        fillColor: Colors.white,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.white),
+  Widget _buildFormField({
+    required String title,
+    required TextEditingController controller,
+    TextInputType? keyboardType,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: Color(0xFF2E7D32),
+          ),
         ),
-      ),
+        const SizedBox(height: 4),
+        TextFormField(
+          controller: controller,
+          keyboardType: keyboardType,
+          style: const TextStyle(fontSize: 14),
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.grey[100],
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 12,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide.none,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(
+                color: Color(0xFF2E7D32),
+                width: 1,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+      ],
     );
   }
 }
