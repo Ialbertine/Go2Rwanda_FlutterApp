@@ -60,7 +60,7 @@ class AccommodationScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        'Accomodation',
+                        'Accomodations',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
