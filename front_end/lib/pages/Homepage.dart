@@ -3,7 +3,7 @@
 
 import 'package:flutter/material.dart';
 import './Profile.dart';
-// import './Search.dart';
+// import './Search.dart'; // Your existing Search page
 
 // Keep your existing category pages
 class AccommodationPage extends StatelessWidget {
