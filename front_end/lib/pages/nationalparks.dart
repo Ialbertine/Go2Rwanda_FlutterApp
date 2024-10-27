@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Nationalpark extends StatefulWidget {
   const Nationalpark({super.key});
@@ -88,7 +89,7 @@ class _NationalparkState extends State<Nationalpark> {
             ),
             _buildMenuItem('Home', Icons.home, '/homepage'),
             const Divider(color: Colors.white24, height: 1),
-            _buildMenuItem('Categories', Icons.category, '/accomodation'),
+            _buildMenuItem('Categories', Icons.category, '/Nationalpark'),
             const Divider(color: Colors.white24, height: 1),
             _buildMenuItem('Map', Icons.map, '/third_page'),
             const Divider(color: Colors.white24, height: 1),
@@ -216,6 +217,15 @@ class HotelCard extends StatelessWidget {
     required this.imageUrl,
   });
 
+  Future<void> _launchURL() async {
+    const url = 'https://www.ubumwegrandehotel.com/?sjrncid=GA_17613199183&sjrnaid=GA_607233709913&gad_source=1&gclid=CjwKCAjwyfe4BhAWEiwAkIL8sGmPlT8PkWsVY7tugVo94NVEaW0v3ULQciFIPxzxY_Y98aEzJ_a6UxoCXl8QAvD_BwE&gclsrc=aw.ds';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -266,21 +276,25 @@ class HotelCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF1B5E20),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Text(
-                      'Book',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
+                  InkWell(
+                    onTap: _launchURL,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1B5E20),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: const Text(
+                        'Book',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 0.5,
+                        ),
                       ),
                     ),
                   ),
