@@ -5,9 +5,8 @@ import './accomodation.dart';
 import './nationalparks.dart';
 import './shoppingDinning.dart';
 import './lake.dart';
-import './Profile.dart'; 
-
-// main codes from Homepage
+import './Profile.dart';
+import './search_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,11 +17,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
+  bool _isMenuOpen = false;
 
   // Pages that will correspond to the BottomNavigationBar items
   final List<Widget> _pages = [
     const MainContent(),
-    Placeholder(), // Search page placeholder
+    HomeScreen(), 
     ProfilePage(),
   ];
 
@@ -32,10 +32,37 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _toggleMenu() {
+    setState(() {
+      _isMenuOpen = !_isMenuOpen;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_selectedIndex], // Show the selected page
+      body: Stack(
+        children: [
+          _pages[_selectedIndex],
+          if (_isMenuOpen)
+            GestureDetector(
+              onTap: _toggleMenu,
+              child: Container(
+                color: Colors.black54,
+                width: double.infinity,
+                height: double.infinity,
+              ),
+            ),
+          if (_isMenuOpen)
+            Positioned(
+              top: 0,
+              right: 0,
+              bottom: 0,
+              width: MediaQuery.of(context).size.width * 0.75,
+              child: _buildMenuDrawer(),
+            ),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -56,6 +83,60 @@ class _HomePageState extends State<HomePage> {
         unselectedItemColor: Colors.white70,
         backgroundColor: const Color(0xFF025719),
         onTap: _onItemTapped,
+      ),
+    );
+  }
+
+  Widget _buildMenuDrawer() {
+    return Container(
+      color: const Color(0xFF025719),
+      child: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16),
+            alignment: Alignment.centerRight,
+            child: IconButton(
+              icon: const Text(
+                'X',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: _toggleMenu,
+            ),
+          ),
+          _buildMenuItem('Home'),
+          _buildMenuItem('Categories'),
+          _buildMenuItem('Map'),
+          _buildMenuItem('Search'),
+          _buildMenuItem('Profile'),
+          _buildMenuItem('Support'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMenuItem(String title) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.white24,
+            width: 1,
+          ),
+        ),
+      ),
+      child: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
       ),
     );
   }
@@ -83,6 +164,7 @@ class MainContent extends StatelessWidget {
   }
 
   Widget _buildHeader(BuildContext context) {
+    final homeState = context.findAncestorStateOfType<_HomePageState>();
     return Container(
       color: const Color(0xFF025719),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -95,7 +177,7 @@ class MainContent extends StatelessWidget {
           const Spacer(),
           IconButton(
             icon: const Icon(Icons.menu, color: Colors.white),
-            onPressed: () {},
+            onPressed: () => homeState?._toggleMenu(),
           ),
         ],
       ),
@@ -242,7 +324,6 @@ class MainContent extends StatelessWidget {
   }
 }
 
-// Widget that wraps the pages from categories (Accommodation, Shopping, etc.) with the bottom navigation
 class CategoryPageWrapper extends StatefulWidget {
   final Widget page;
 
@@ -257,7 +338,7 @@ class _CategoryPageWrapperState extends State<CategoryPageWrapper> {
 
   final List<Widget> _pages = [
     const MainContent(),
-    Placeholder(),
+    HomeScreen(),
     ProfilePage(),
   ];
 
