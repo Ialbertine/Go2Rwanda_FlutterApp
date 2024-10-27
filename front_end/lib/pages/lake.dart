@@ -42,12 +42,12 @@ class _LakeState extends State<Lake> {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> hotels = [
-      {'name': 'Cleo Hotel', 'image': 'assets/Betanyhotel.jpg'},
-      {'name': 'Grand Legacy', 'image': 'assets/Betanyhotel.jpg'},
-      {'name': 'Lemigo Hotel', 'image': 'assets/Betanyhotel.jpg'},
+      {'name': 'Cleo Hotel', 'image': 'assets/cleo.jpg'},
+      {'name': 'Grand Legacy', 'image': 'assets/grandlegacy.jpg'},
+      {'name': 'Lemigo Hotel', 'image': 'assets/lemigohotel.webp'},
       {'name': 'Serena Hotel', 'image': 'assets/Betanyhotel.jpg'},
-      {'name': 'Bethany Hotel', 'image': 'assets/Betanyhotel.jpg'},
-      {'name': 'Panorama Hotel', 'image': 'assets/Betanyhotel.jpg'},
+      {'name': 'Bethany Hotel', 'image': 'assets/kigaliserena.jpg'},
+      {'name': 'Panorama Hotel', 'image': 'assets/Marriot.jpg'},
     ];
 
     double screenWidth = MediaQuery.of(context).size.width;
@@ -138,7 +138,9 @@ class _LakeState extends State<Lake> {
                     children: [
                       IconButton(
                         icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
                       IconButton(
                         icon: const Icon(Icons.menu, color: Colors.white, size: 28),
