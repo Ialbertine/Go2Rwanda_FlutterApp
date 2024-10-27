@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors, use_super_parameters, file_names
+// ignore_for_file: library_private_types_in_public_api, use_super_parameters, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import './accomodation.dart';
 import './nationalparks.dart';
 import './shoppingDinning.dart';
-import './profile.dart';
+import './lake.dart';
+import './Profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,10 +17,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  // List of pages associated with the bottom navigation
+  // Pages that will correspond to the BottomNavigationBar items
   final List<Widget> _pages = [
     const MainContent(),
-    Placeholder(), // Search placeholder
+    Placeholder(), // Search page placeholder
     ProfilePage(),
   ];
 
@@ -120,10 +121,10 @@ class MainContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildCategoryItem(
-                  context, Icons.apartment, 'Accommodation', MyAppAccom()),
+                  context, Icons.apartment, 'Accommodation', Accomodation()),
               _buildCategoryItem(
                   context, Icons.landscape, 'National Parks', Nationalpark()),
-              _buildCategoryItem(context, Icons.water, 'Lakes', Placeholder()),
+              _buildCategoryItem(context, Icons.water, 'Lakes', Lake()),
               _buildCategoryItem(context, Icons.shopping_cart, 'Shopping',
                   ShoppindAndDinning()),
             ],
@@ -140,9 +141,8 @@ class MainContent extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Scaffold(
-              body: page,
-              bottomNavigationBar: _buildBottomNavigationBar(context),
+            builder: (context) => CategoryPageWrapper(
+              page: page,
             ),
           ),
         );
@@ -238,30 +238,62 @@ class MainContent extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _buildBottomNavigationBar(BuildContext context) {
-    return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: 'Search',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-      ],
-      currentIndex: 0,
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.white70,
-      backgroundColor: const Color(0xFF025719),
-      onTap: (index) {
-        Navigator.popUntil(context, (route) => route.isFirst);
-      },
+// Widget that wraps the pages from categories (Accommodation, Shopping, etc.) with the bottom navigation
+class CategoryPageWrapper extends StatefulWidget {
+  final Widget page;
+
+  const CategoryPageWrapper({required this.page, Key? key}) : super(key: key);
+
+  @override
+  _CategoryPageWrapperState createState() => _CategoryPageWrapperState();
+}
+
+class _CategoryPageWrapperState extends State<CategoryPageWrapper> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _pages = [
+    const MainContent(),
+    Placeholder(),
+    ProfilePage(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    // Navigate to the correct page when tapping bottom nav item
+    if (index == 0) {
+      Navigator.pop(context); // Go back to home
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _selectedIndex == 0 ? widget.page : _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white70,
+        backgroundColor: const Color(0xFF025719),
+        onTap: _onItemTapped,
+      ),
     );
   }
 }

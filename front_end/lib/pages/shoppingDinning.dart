@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -6,6 +8,134 @@ void main() {
 
 class ShoppindAndDinning extends StatelessWidget {
   const ShoppindAndDinning({super.key});
+
+
+  void _showShoppingDinningModal(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          backgroundColor: const Color(0xFF1B5E20),
+          child: Container(
+            constraints: const BoxConstraints(maxHeight: 300),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(16.0),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: Colors.white24,
+                        width: 0.5,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Shopping and Dining',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: Colors.white24,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Text(
+                            'X',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                            'Vestibulum eget sapien vitae urna accumsan vehicula. '
+                            'Aliquam erat volutpat. '
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                            'Vestibulum eget sapien vitae urna accumsan vehicula. '
+                            'Aliquam erat volutpat. '
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                            'Vestibulum eget sapien vitae urna accumsan vehicula. '
+                            'Aliquam erat volutpat.'
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              height: 1.5,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                top: BorderSide(
+                                  color: Colors.white.withOpacity(0.2),
+                                  width: 0.5,
+                                ),
+                              ),
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Visit the website: ',
+                                  style: TextStyle(
+                                    color: Colors.white.withOpacity(0.7),
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                const Text(
+                                  'https://www.example.org/live',
+                                  style: TextStyle(
+                                    color: Colors.blue,
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -116,10 +246,8 @@ class _AccommodationState extends State<Accommodation> {
                   ),
                   actions: [
                     IconButton(
-                      icon: const Icon(Icons.menu, color: Colors.white),
-                      onPressed: () {
-                        // Handle menu action
-                      },
+                      icon: const Icon(Icons.menu, color: Colors.white, size: 28),
+                      onPressed: () => Navigator.pop(context),
                     ),
                   ],
                 ),

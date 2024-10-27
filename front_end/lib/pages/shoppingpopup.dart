@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import, camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

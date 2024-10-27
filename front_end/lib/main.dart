@@ -7,9 +7,8 @@ import './pages/landingpage.dart';
 import './pages/Homepage.dart';
 import './pages/accomodation.dart';
 import './pages/Profile.dart';
-import './pages/Accomodationpop.dart';
 import './pages/lake.dart';
-import './pages/shoppingpopup.dart';
+import './pages/shoppingDinning.dart';
 
 void main() {
   runApp(MyApp());
@@ -45,11 +44,10 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterPage(),
         '/homepage': (context) => const HomePage(),
         '/profile': (context) => ProfilePage(),
-        '/accomodation':(context)=>const AccommodationScreen(),
         '/nationalpark':(context)=>const Nationalpark(),
-        '/accpopup':(context)=>const Accommodation(),
-        '/lakepopup':(context)=>const Lake(),
-        '/shoppopup':(context)=>const shopping(),
+        '/accomodation':(context)=>const Accomodation(),
+        '/lake':(context)=>const Lake(),
+        '/shoppopup':(context)=>const ShoppindAndDinning(),
 
       },
     );

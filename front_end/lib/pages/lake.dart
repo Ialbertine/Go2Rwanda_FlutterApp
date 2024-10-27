@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -161,12 +163,12 @@ class Lake extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> hotels = [
-      {'name': 'Cleo Hotel', 'image': 'assets/photo.png'},
-      {'name': 'Grand Legacy', 'image': 'assets/photo.png'},
-      {'name': 'Lemigo Hotel', 'image': 'assets/photo.png'},
-      {'name': 'Serena Hotel', 'image': 'assets/photo.png'},
-      {'name': 'Bethany Hotel', 'image': 'assets/photo.png'},
-      {'name': 'Panorama Hotel', 'image': 'assets/photo.png'},
+      {'name': 'Cleo Hotel', 'image': 'assets/Betanyhotel.jpg'},
+      {'name': 'Grand Legacy', 'image': 'assets/Betanyhotel.jpg'},
+      {'name': 'Lemigo Hotel', 'image': 'assets/Betanyhotel.jpg'},
+      {'name': 'Serena Hotel', 'image': 'assets/Betanyhotel.jpg'},
+      {'name': 'Bethany Hotel', 'image': 'assets/Betanyhotel.jpg'},
+      {'name': 'Panorama Hotel', 'image': 'assets/Betanyhotel.jpg'},
     ];
 
     double screenWidth = MediaQuery.of(context).size.width;
@@ -180,7 +182,7 @@ class Lake extends StatelessWidget {
             width: double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/photo.png'),
+                image: AssetImage('assets/betanyhotel.jpg'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -273,44 +275,6 @@ class Lake extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: Container(
-        height: 65,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 4,
-              offset: Offset(0, -1),
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          selectedItemColor: const Color(0xFF1B5E20),
-          unselectedItemColor: Colors.grey.shade400,
-          currentIndex: 0,
-          type: BottomNavigationBarType.fixed,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          iconSize: 28,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
-        ),
       ),
     );
   }
