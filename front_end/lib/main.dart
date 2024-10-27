@@ -46,7 +46,9 @@ class MyApp extends StatelessWidget {
         '/homepage': (context) => const HomePage(),
         '/profile': (context) => ProfilePage(),
         '/accomodation': (context) => const Accomodation(),
-        '/nationalpark': (context) => const Nationalpark()
+        '/nationalpark': (context) => const Nationalpark(),
+        '/third_page': (context) => ThirdPage(),
+        '/search_page': (context) => const HomeScreen(),
       },
     );
   }
