@@ -1,180 +1,105 @@
-// ignore_for_file: unnecessary_import
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-// void main() {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   SystemChrome.setSystemUIOverlayStyle(
-//     const SystemUiOverlayStyle(
-//       statusBarColor: Colors.transparent,
-//       statusBarIconBrightness: Brightness.light,
-//     ),
-//   );
-//   runApp(const MyApp());
-// }
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+    ),
+  );
+  runApp(const MyApp());
+}
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'Hotel Booking App',
-//       theme: ThemeData(
-//         primarySwatch: Colors.green,
-//         visualDensity: VisualDensity.adaptivePlatformDensity,
-//       ),
-//       home: const Lake(),
-//     );
-//   }
-// }
-
-class Lake extends StatelessWidget {
-  const Lake({super.key});
-
-  void _showShoppingDiningModal(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          backgroundColor: const Color(0xFF1B5E20),
-          child: Container(
-            constraints: const BoxConstraints(maxHeight: 300),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.white24,
-                        width: 0.5,
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Lakes',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            color: Colors.white24,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Text(
-                            'X',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-                            'Vestibulum eget sapien vitae urna accumsan vehicula. '
-                            'Aliquam erat volutpat. '
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-                            'Vestibulum eget sapien vitae urna accumsan vehicula. '
-                            'Aliquam erat volutpat. '
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-                            'Vestibulum eget sapien vitae urna accumsan vehicula. '
-                            'Aliquam erat volutpat.'
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              height: 1.5,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            decoration: BoxDecoration(
-                              border: Border(
-                                top: BorderSide(
-                                  color: Colors.white.withOpacity(0.2),
-                                  width: 0.5,
-                                ),
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Visit the website: ',
-                                  style: TextStyle(
-                                    color: Colors.white.withOpacity(0.7),
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                const Text(
-                                  'https://www.example.org/live',
-                                  style: TextStyle(
-                                    color: Colors.blue,
-                                    decoration: TextDecoration.underline,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Hotel Booking App',
+      theme: ThemeData(
+        primarySwatch: Colors.green,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: const Lake(),
     );
   }
+}
+
+class Lake extends StatefulWidget {
+  const Lake({super.key});
+
+  @override
+  State<Lake> createState() => _LakeState();
+}
+
+class _LakeState extends State<Lake> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> hotels = [
-      {'name': 'Cleo Hotel', 'image': 'assets/Betanyhotel.jpg'},
-      {'name': 'Grand Legacy', 'image': 'assets/Betanyhotel.jpg'},
-      {'name': 'Lemigo Hotel', 'image': 'assets/Betanyhotel.jpg'},
+      {'name': 'Cleo Hotel', 'image': 'assets/cleo.jpg'},
+      {'name': 'Grand Legacy', 'image': 'assets/grandlegacy.jpg'},
+      {'name': 'Lemigo Hotel', 'image': 'assets/lemigohotel.webp'},
       {'name': 'Serena Hotel', 'image': 'assets/Betanyhotel.jpg'},
-      {'name': 'Bethany Hotel', 'image': 'assets/Betanyhotel.jpg'},
-      {'name': 'Panorama Hotel', 'image': 'assets/Betanyhotel.jpg'},
+      {'name': 'Bethany Hotel', 'image': 'assets/kigaliserena.jpg'},
+      {'name': 'Panorama Hotel', 'image': 'assets/Marriot.jpg'},
     ];
 
     double screenWidth = MediaQuery.of(context).size.width;
     double cardWidth = (screenWidth - 64) / 2;
 
     return Scaffold(
+      key: _scaffoldKey,
+      endDrawer: Container(
+        width: MediaQuery.of(context).size.width * 0.85,
+        color: const Color(0xFF1B5E20),
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top + 20,
+                right: 20,
+                bottom: 20,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      'X',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            _buildMenuItem('Home', Icons.home),
+            const Divider(color: Colors.white24, height: 1),
+            _buildMenuItem('Categories', Icons.category),
+            const Divider(color: Colors.white24, height: 1),
+            _buildMenuItem('Map', Icons.map),
+            const Divider(color: Colors.white24, height: 1),
+            _buildMenuItem('Search', Icons.search),
+            const Divider(color: Colors.white24, height: 1),
+            _buildMenuItem('Profile', Icons.person),
+            const Divider(color: Colors.white24, height: 1),
+            _buildMenuItem('Support', Icons.support_agent),
+            const Divider(color: Colors.white24, height: 1),
+          ],
+        ),
+      ),
       body: Stack(
         children: [
           Container(
@@ -213,15 +138,15 @@ class Lake extends StatelessWidget {
                     children: [
                       IconButton(
                         icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.menu, color: Colors.white, size: 28),
-                            onPressed: () => _showShoppingDiningModal(context),
-                          ),
-                        ],
+                      IconButton(
+                        icon: const Icon(Icons.menu, color: Colors.white, size: 28),
+                        onPressed: () {
+                          _scaffoldKey.currentState?.openEndDrawer();
+                        },
                       ),
                     ],
                   ),
@@ -272,6 +197,26 @@ class Lake extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMenuItem(String title, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.white, size: 24),
+          const SizedBox(width: 24),
+          Text(
+            title,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],
