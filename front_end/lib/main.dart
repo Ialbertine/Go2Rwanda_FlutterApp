@@ -1,6 +1,4 @@
-// ignore_for_file: use_super_parameters, unused_import, use_key_in_widget_constructors, prefer_const_constructors
 import 'package:flutter/material.dart';
-import './pages/nationalparks.dart';
 import './auth/login.dart';
 import './auth/register.dart';
 import './pages/landingpage.dart';
@@ -11,19 +9,27 @@ import './pages/lake.dart';
 import './pages/shoppingDinning.dart';
 import './pages/search_page.dart';
 import './pages/third_page.dart';
+import './pages/nationalparks.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+    ),
+  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Go2Rwanda',
       debugShowCheckedModeBanner: false,
+      title: 'Go2Rwanda',
       theme: ThemeData(
         primarySwatch: Colors.green,
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -39,16 +45,18 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const LandingPage(),
+      initialRoute: '/',
       routes: {
+        '/': (context) => const LandingPage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/homepage': (context) => const HomePage(),
-        '/profile': (context) => ProfilePage(),
+        '/profile': (context) => const ProfilePage(),
         '/accomodation': (context) => const Accomodation(),
         '/nationalpark': (context) => const Nationalpark(),
         '/third_page': (context) => ThirdPage(),
-        '/search_page': (context) => const HomeScreen(),
+        '/search': (context) => const HomeScreen(),
+        '/lake': (context) => const Lake(),
       },
     );
   }
