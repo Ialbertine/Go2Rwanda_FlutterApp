@@ -36,3 +36,5 @@ Make sure you have the following installed:
    ```bash
    git clone https://github.com/Ialbertine/Go2Rwanda_FlutterApp.git
    cd GO2RWANDA
+   
+To develop Go2Rwanda Mobile App we used SetState Management method that was used within stateful widgets to manage the state of this app’s user interface.
