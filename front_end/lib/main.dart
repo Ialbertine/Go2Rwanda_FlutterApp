@@ -11,6 +11,7 @@ import './pages/shoppingDinning.dart';
 import './pages/search_page.dart';
 import './pages/third_page.dart';
 import './pages/nationalparks.dart';
+import './pages/support.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
         '/third_page': (context) => ThirdPage(),
         '/search': (context) => const HomeScreen(),
         '/lake': (context) => const Lake(),
+        '/support':(context) => Support(),
       },
     );
   }

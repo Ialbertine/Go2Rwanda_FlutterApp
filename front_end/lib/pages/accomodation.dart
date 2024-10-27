@@ -97,7 +97,7 @@ class _AccomodationState extends State<Accomodation> {
             const Divider(color: Colors.white24, height: 1),
             _buildMenuItem('Profile', Icons.person, '/profile'),
             const Divider(color: Colors.white24, height: 1),
-            _buildMenuItem('Support', Icons.support_agent, '/third_page'),
+            _buildMenuItem('Support', Icons.support_agent, '/support'),
             const Divider(color: Colors.white24, height: 1),
           ],
         ),
