@@ -59,7 +59,6 @@ class MyApp extends StatelessWidget {
         '/third_page': (context) => ThirdPage(),
         '/search': (context) => const HomeScreen(),
         '/lake': (context) => const Lake(),
-        '/support':(context) => Support(),
       },
     );
   }
