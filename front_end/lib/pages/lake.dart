@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Accomodation extends StatefulWidget {
-  const Accomodation({super.key});
+class Lake extends StatefulWidget {
+  const Lake({super.key});
 
   @override
-  State<Accomodation> createState() => _AccomodationState();
+  State<Lake> createState() => _LakeState();
 }
 
-class _AccomodationState extends State<Accomodation> {
+class _LakeState extends State<Lake> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _navigateToRoute(BuildContext context, String route) {
@@ -89,7 +89,7 @@ class _AccomodationState extends State<Accomodation> {
             ),
             _buildMenuItem('Home', Icons.home, '/homepage'),
             const Divider(color: Colors.white24, height: 1),
-            _buildMenuItem('Categories', Icons.category, '/accomodation'),
+            _buildMenuItem('Categories', Icons.category, '/Lake'),
             const Divider(color: Colors.white24, height: 1),
             _buildMenuItem('Map', Icons.map, '/third_page'),
             const Divider(color: Colors.white24, height: 1),
@@ -159,7 +159,7 @@ class _AccomodationState extends State<Accomodation> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Accomodations',
+                      'Lakes',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 30,
