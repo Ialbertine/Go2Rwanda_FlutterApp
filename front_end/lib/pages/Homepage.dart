@@ -5,7 +5,9 @@ import './accomodation.dart';
 import './nationalparks.dart';
 import './shoppingDinning.dart';
 import './lake.dart';
-import './Profile.dart';
+import './Profile.dart'; 
+
+// main codes from Homepage
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
