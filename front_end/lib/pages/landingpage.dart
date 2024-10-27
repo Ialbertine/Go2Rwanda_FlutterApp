@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_super_parameters
+// ignore_for_file: prefer_const_constructors, use_super_parameter
 
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class LandingPage extends StatelessWidget {
                 ),
               ),
             ),
-            Container( // color background container
+            Container( // color background containers
               color: const Color.fromARGB(255, 57, 88, 58).withOpacity(0.5), // Black background with 50% opacity
             ),
             Center( // Centered container
