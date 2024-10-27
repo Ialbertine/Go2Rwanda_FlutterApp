@@ -1,86 +1,11 @@
-// main.dart
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, use_super_parameters, deprecated_member_use, avoid_print
+// ignore_for_file: library_private_types_in_public_api, use_super_parameters, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import './accomodation.dart';
+import './nationalparks.dart';
+import './shoppingDinning.dart';
+import './lake.dart';
 import './Profile.dart';
-// import './Search.dart'; // Your existing Search page
-
-// Keep your existing category pages
-class AccommodationPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Accommodation'),
-        backgroundColor: Color(0xFF4CAF50),
-      ),
-      body: Center(
-        child: Text('Accommodation Details'),
-      ),
-    );
-  }
-}
-
-class NationalParksPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('National Parks'),
-        backgroundColor: Color(0xFF4CAF50),
-      ),
-      body: Center(
-        child: Text('National Parks Details'),
-      ),
-    );
-  }
-}
-
-class LakesPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Lakes'),
-        backgroundColor: Color(0xFF4CAF50),
-      ),
-      body: Center(
-        child: Text('Lakes Details'),
-      ),
-    );
-  }
-}
-
-class ShoppingPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Shopping'),
-        backgroundColor: Color(0xFF4CAF50),
-      ),
-      body: Center(
-        child: Text('Shopping Details'),
-      ),
-    );
-  }
-}
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const HomePage(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -91,42 +16,61 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
-  late Widget _currentPage;
 
-  // List of place names and their images
-  final List<Map<String, String>> places = [
-    {
-      'name': 'Cleo Hotel',
-      'image': 'assets/cleoimage.jpeg',
-    },
-    {
-      'name': 'Rwiza Village',
-      'image': 'assets/rwizaa.jpg',
-    },
-    {
-      'name': 'Grand Legacy',
-      'image': 'assets/legacy.jpg',
-    },
-    {
-      'name': 'Marriot',
-      'image': 'assets/marriot.png',
-    },
+  // Pages that will correspond to the BottomNavigationBar items
+  final List<Widget> _pages = [
+    const MainContent(),
+    Placeholder(), // Search page placeholder
+    ProfilePage(),
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    _currentPage = _buildMainContent();
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
-  Widget _buildMainContent() {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _pages[_selectedIndex], // Show the selected page
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white70,
+        backgroundColor: const Color(0xFF025719),
+        onTap: _onItemTapped,
+      ),
+    );
+  }
+}
+
+class MainContent extends StatelessWidget {
+  const MainContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(),
+          _buildHeader(context),
           const SizedBox(height: 20),
-          _buildCategories(),
+          _buildCategories(context),
           const SizedBox(height: 30),
           _buildViewPlaces(),
           const SizedBox(height: 20),
@@ -136,56 +80,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (_selectedIndex != 0) {
-          setState(() {
-            _selectedIndex = 0;
-            _currentPage = _buildMainContent();
-          });
-          return false;
-        }
-        return true;
-      },
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: _currentPage,
-        bottomNavigationBar: _buildBottomNavBar(),
-      ),
-    );
-  }
-
-  // Function to handle category navigation
-  void _navigateToCategory(String category) {
-    Widget page;
-    switch (category) {
-      case 'Accommodation':
-        page = AccommodationPage();
-        break;
-      case 'National Parks':
-        page = NationalParksPage();
-        break;
-      case 'Lakes':
-        page = LakesPage();
-        break;
-      case 'Shopping':
-        page = ShoppingPage();
-        break;
-      default:
-        return;
-    }
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => page),
-    );
-  }
-
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Container(
-      color: const Color(0xFF4CAF50),
+      color: const Color(0xFF025719),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Row(
         children: [
@@ -203,7 +100,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildCategories() {
+  Widget _buildCategories(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -223,10 +120,13 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildCategoryItem(Icons.apartment, 'Accommodation'),
-              _buildCategoryItem(Icons.landscape, 'National Parks'),
-              _buildCategoryItem(Icons.water, 'Lakes'),
-              _buildCategoryItem(Icons.shopping_cart, 'Shopping'),
+              _buildCategoryItem(
+                  context, Icons.apartment, 'Accommodation', Accomodation()),
+              _buildCategoryItem(
+                  context, Icons.landscape, 'National Parks', Nationalpark()),
+              _buildCategoryItem(context, Icons.water, 'Lakes', Lake()),
+              _buildCategoryItem(context, Icons.shopping_cart, 'Shopping',
+                  ShoppindAndDinning()),
             ],
           ),
         ),
@@ -234,9 +134,19 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildCategoryItem(IconData icon, String label) {
+  Widget _buildCategoryItem(
+      BuildContext context, IconData icon, String label, Widget page) {
     return GestureDetector(
-      onTap: () => _navigateToCategory(label),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CategoryPageWrapper(
+              page: page,
+            ),
+          ),
+        );
+      },
       child: Container(
         width: 85,
         height: 80,
@@ -274,6 +184,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildHotelGrid() {
+    final List<Map<String, String>> places = [
+      {'name': 'Cleo Hotel', 'image': 'assets/cleoimage.jpeg'},
+      {'name': 'Rwiza Village', 'image': 'assets/rwizaa.jpg'},
+      {'name': 'Grand Legacy', 'image': 'assets/legacy.jpg'},
+      {'name': 'Marriot', 'image': 'assets/marriot.png'},
+    ];
+
     return Expanded(
       child: GridView.builder(
         padding: const EdgeInsets.all(16),
@@ -303,72 +220,17 @@ class _HomePageState extends State<HomePage> {
           fit: StackFit.expand,
           children: [
             if (place['image'] != null)
-              Image.asset(
-                place['image']!,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  print('Error loading image: $error');
-                  return Container(
-                    color: const Color(0xFF4CAF50),
-                    child: const Icon(
-                      Icons.hotel,
-                      size: 50,
-                      color: Colors.white,
-                    ),
-                  );
-                },
-              )
-            else
-              Container(
-                color: const Color(0xFF4CAF50),
-                child: const Icon(
-                  Icons.hotel,
-                  size: 50,
-                  color: Colors.white,
-                ),
-              ),
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black.withOpacity(0.7),
-                  ],
-                ),
-              ),
-            ),
+              Image.asset(place['image']!, fit: BoxFit.cover),
             Positioned(
               left: 12,
-              right: 12,
               bottom: 12,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    place['name'] ?? 'Unknown Hotel',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  GestureDetector(
-                    onTap: () {
-                      print('Viewing details for: ${place['name']}');
-                    },
-                    child: const Text(
-                      'View More',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                  ),
-                ],
+              child: Text(
+                place['name']!,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],
@@ -376,72 +238,61 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+// Widget that wraps the pages from categories (Accommodation, Shopping, etc.) with the bottom navigation
+class CategoryPageWrapper extends StatefulWidget {
+  final Widget page;
+
+  const CategoryPageWrapper({required this.page, Key? key}) : super(key: key);
+
+  @override
+  _CategoryPageWrapperState createState() => _CategoryPageWrapperState();
+}
+
+class _CategoryPageWrapperState extends State<CategoryPageWrapper> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _pages = [
+    const MainContent(),
+    Placeholder(),
+    ProfilePage(),
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
-      if (_selectedIndex == index) return;
-      
       _selectedIndex = index;
-      switch (index) {
-        case 0:
-          _currentPage = _buildMainContent();
-          break;
-        case 1:
-          // _currentPage = SearchPage();  // Your existing Search page
-          break;
-        case 2:
-          _currentPage = ProfilePage();  // Your existing Profile page
-          break;
-      }
     });
+    // Navigate to the correct page when tapping bottom nav item
+    if (index == 0) {
+      Navigator.pop(context); // Go back to home
+    }
   }
 
-  Widget _buildBottomNavBar() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 10,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _selectedIndex == 0 ? widget.page : _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildNavItemNew(Icons.home_outlined, 'Home', 0),
-            _buildNavItemNew(Icons.search, 'Search', 1),
-            _buildNavItemNew(Icons.person_outline, 'Profile', 2),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNavItemNew(IconData icon, String label, int index) {
-    final isSelected = _selectedIndex == index;
-    return GestureDetector(
-      onTap: () => _onItemTapped(index),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color: isSelected ? const Color(0xFF4CAF50) : Colors.grey,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              color: isSelected ? const Color(0xFF4CAF50) : Colors.grey,
-              fontSize: 12,
-            ),
-          ),
-        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white70,
+        backgroundColor: const Color(0xFF025719),
+        onTap: _onItemTapped,
       ),
     );
   }

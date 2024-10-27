@@ -7,6 +7,8 @@ import './pages/landingpage.dart';
 import './pages/Homepage.dart';
 import './pages/accomodation.dart';
 import './pages/Profile.dart';
+import './pages/lake.dart';
+import './pages/shoppingDinning.dart';
 import './pages/search_page.dart';
 import './pages/third_page.dart';
 
@@ -43,10 +45,8 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterPage(),
         '/homepage': (context) => const HomePage(),
         '/profile': (context) => ProfilePage(),
-        '/accomodation': (context) => const MyAppAccom(),
-        '/nationalpark': (context) => const Nationalpark(),
-        '/search': (context) => const HomeScreen(),
-        '/recent': (context) => ThirdPage()
+        '/accomodation': (context) => const Accomodation(),
+        '/nationalpark': (context) => const Nationalpark()
       },
     );
   }
