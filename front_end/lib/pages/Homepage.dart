@@ -19,10 +19,13 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   bool _isMenuOpen = false;
 
-  // Pages that will correspond to the BottomNavigationBar items
+  // Pages that will correspond to the BottomNavigationBar items 
   final List<Widget> _pages = [
     const MainContent(),
+ contacts
+    Placeholder(), // Search page placeholders
     HomeScreen(), 
+ main
     ProfilePage(),
   ];
 

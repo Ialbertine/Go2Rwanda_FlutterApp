@@ -10,7 +10,7 @@ class ThirdPage extends StatelessWidget {
           const Color.fromARGB(255, 10, 94, 10), // Green background
       appBar: AppBar(
         backgroundColor: const Color(0xFF006400),
-        elevation: 0, // Remove shadow
+        elevation: 0, // Remove the shadow
         title: const Text(
           'Go2Rwanda',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),

@@ -11,9 +11,9 @@ class HomeScreen extends StatelessWidget {
     // Set the status bar color to dark green
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: Color(0xFF1B5E20), // Dark green to match the themes
+        statusBarColor: Color(0xFF1B5E20), // Dark green to match the theme
         statusBarIconBrightness:
-            Brightness.light, // White icons for dark status bars
+            Brightness.light, // White icons for dark status bar
       ),
     );
 
