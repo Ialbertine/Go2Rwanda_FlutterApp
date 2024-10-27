@@ -1,33 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
-    ),
-  );
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Hotel Booking App',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: const Accomodation(),
-    );
-  }
-}
 
 class Accomodation extends StatefulWidget {
   const Accomodation({super.key});
@@ -38,6 +9,36 @@ class Accomodation extends StatefulWidget {
 
 class _AccomodationState extends State<Accomodation> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _navigateToRoute(BuildContext context, String route) {
+    Navigator.pop(context); // Close drawer first
+    if (route.isNotEmpty) {
+      Navigator.pushNamed(context, route);
+    }
+  }
+
+  Widget _buildMenuItem(String title, IconData icon, String route) {
+    return InkWell(
+      onTap: () => _navigateToRoute(context, route),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        child: Row(
+          children: [
+            Icon(icon, color: Colors.white, size: 24),
+            const SizedBox(width: 24),
+            Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,17 +86,17 @@ class _AccomodationState extends State<Accomodation> {
                 ],
               ),
             ),
-            _buildMenuItem('Home', Icons.home),
+            _buildMenuItem('Home', Icons.home, '/homepage'),
             const Divider(color: Colors.white24, height: 1),
-            _buildMenuItem('Categories', Icons.category),
+            _buildMenuItem('Categories', Icons.category, '/accomodation'),
             const Divider(color: Colors.white24, height: 1),
-            _buildMenuItem('Map', Icons.map),
+            _buildMenuItem('Map', Icons.map, '/third_page'),
             const Divider(color: Colors.white24, height: 1),
-            _buildMenuItem('Search', Icons.search),
+            _buildMenuItem('Search', Icons.search, '/search'),
             const Divider(color: Colors.white24, height: 1),
-            _buildMenuItem('Profile', Icons.person),
+            _buildMenuItem('Profile', Icons.person, '/profile'),
             const Divider(color: Colors.white24, height: 1),
-            _buildMenuItem('Support', Icons.support_agent),
+            _buildMenuItem('Support', Icons.support_agent, '/third_page'),
             const Divider(color: Colors.white24, height: 1),
           ],
         ),
@@ -197,26 +198,6 @@ class _AccomodationState extends State<Accomodation> {
                   ),
                 ),
               ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMenuItem(String title, IconData icon) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.white, size: 24),
-          const SizedBox(width: 24),
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
             ),
           ),
         ],
