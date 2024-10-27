@@ -17,10 +17,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  // Pages that will correspond to the BottomNavigationBar items
+  // Pages that will correspond to the BottomNavigationBar items 
   final List<Widget> _pages = [
     const MainContent(),
-    Placeholder(), // Search page placeholder
+    Placeholder(), // Search page placeholders
     ProfilePage(),
   ];
 
