@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+//Recent searches
+
 class ThirdPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
