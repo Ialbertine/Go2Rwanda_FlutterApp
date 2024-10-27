@@ -24,7 +24,6 @@ class Nationalparks extends StatefulWidget {
 }
 
 class _AccommodationState extends State<Nationalparks> {
-  int _selectedIndex = 0; // Track selected footer item
   
   final List<AccommodationItem> accommodations = [
     AccommodationItem(
@@ -64,12 +63,6 @@ class _AccommodationState extends State<Nationalparks> {
     //   rating: "view more",
     // ),
   ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -183,40 +176,6 @@ class _AccommodationState extends State<Nationalparks> {
             ),
           ),
         ],
-      ),
-      // Add the bottom navigation bar
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFF025719),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 10,
-              offset: const Offset(0, -5),
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          backgroundColor:const Color(0xFF025719),
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white70,
-          onTap: _onItemTapped,
-        ),
       ),
     );
   }

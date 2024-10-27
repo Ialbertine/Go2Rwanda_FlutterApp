@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -32,7 +34,7 @@ import 'package:flutter/services.dart';
 class AccommodationScreen extends StatelessWidget {
   const AccommodationScreen({super.key});
 
-  void _showShoppingDiningModal(BuildContext context) {
+  void _showAccomodationModal(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -217,7 +219,7 @@ class AccommodationScreen extends StatelessWidget {
                         children: [
                           IconButton(
                             icon: const Icon(Icons.menu, color: Colors.white, size: 28),
-                            onPressed: () => _showShoppingDiningModal(context),
+                            onPressed: () => _showAccomodationModal(context),
                           ),
                         ],
                       ),
