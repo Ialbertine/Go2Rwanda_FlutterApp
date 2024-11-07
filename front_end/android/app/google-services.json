@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "2175104588",
+    "project_id": "gotorwanda-3b144",
+    "storage_bucket": "gotorwanda-3b144.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2175104588:android:542ed9a79872e4471266e9",
+        "android_client_info": {
+          "package_name": "com.go2rwanda.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDURUatO3UsmQKRwkTiEzp1W2NcMq1G4PI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
