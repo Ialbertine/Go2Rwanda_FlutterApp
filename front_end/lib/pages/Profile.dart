@@ -1,6 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api, use_super_parameters, file_name
-
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -11,6 +11,10 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final _formKey = GlobalKey<FormState>();
+  final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
+  bool _isEditing = false;
+  bool _isLoading = false;
 
   late TextEditingController _fullNameController;
   late TextEditingController _addressController;
@@ -20,10 +24,127 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    _fullNameController = TextEditingController(text: "Divine Birasa Ishimwe");
-    _addressController = TextEditingController(text: "Kigali/Rwanda");
-    _contactController = TextEditingController(text: "0781234567");
-    _emailController = TextEditingController(text: "hello@gmail.com");
+    _fullNameController = TextEditingController();
+    _addressController = TextEditingController();
+    _contactController = TextEditingController();
+    _emailController = TextEditingController();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    setState(() => _isLoading = true);
+    try {
+      final User? currentUser = _auth.currentUser;
+      if (currentUser != null) {
+        // Set email from Firebase Auth
+        _emailController.text = currentUser.email ?? '';
+
+        // Get additional user data from Firestore
+        final userData = await _firestore
+            .collection('users')
+            .doc(currentUser.uid)
+            .get();
+
+        if (userData.exists) {
+          setState(() {
+            _fullNameController.text = userData.data()?['fullName'] ?? '';
+            _addressController.text = userData.data()?['address'] ?? '';
+            _contactController.text = userData.data()?['contact'] ?? '';
+          });
+        }
+      }
+    } catch (e) {
+      _showErrorSnackBar('Error loading profile data');
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _updateProfile() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _isLoading = true);
+    try {
+      final User? currentUser = _auth.currentUser;
+      if (currentUser != null) {
+        await _firestore.collection('users').doc(currentUser.uid).set({
+          'fullName': _fullNameController.text,
+          'address': _addressController.text,
+          'contact': _contactController.text,
+          'email': _emailController.text,
+          'updatedAt': FieldValue.serverTimestamp(),
+        }, SetOptions(merge: true));
+
+        setState(() => _isEditing = false);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Profile updated successfully'),
+              backgroundColor: Color(0xFF2E7D32),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      _showErrorSnackBar('Error updating profile');
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _deleteProfile() async {
+    final bool confirm = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Profile'),
+        content: const Text(
+          'Are you sure you want to delete your profile? This action cannot be undone.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    ) ?? false;
+
+    if (!confirm) return;
+
+    setState(() => _isLoading = true);
+    try {
+      final User? currentUser = _auth.currentUser;
+      if (currentUser != null) {
+        // Delete user data from Firestore
+        await _firestore.collection('users').doc(currentUser.uid).delete();
+        // Delete user account
+        await currentUser.delete();
+        // Sign out
+        await _auth.signOut();
+        
+        if (mounted) {
+          Navigator.of(context).pushReplacementNamed('/login');
+        }
+      }
+    } catch (e) {
+      _showErrorSnackBar('Error deleting profile');
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+      ),
+    );
   }
 
   @override
@@ -38,127 +159,127 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Bottom part remains white
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF2E7D32), // Green top section
+        backgroundColor: const Color(0xFF2E7D32),
         elevation: 0,
-        title: const Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            'Go2Rwanda',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+        title: const Text(
+          'Go2Rwanda',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Colors.white),
-            onPressed: () {},
-          ),
+          if (!_isEditing)
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: _deleteProfile,
+            ),
         ],
       ),
-      body: Stack(
-        children: [
-          // Green section at the top
-          Container(
-            height: MediaQuery.of(context).size.height * 0.35,
-            color: const Color(0xFF2E7D32),
-          ),
-          // White section for the rest of the body
-          Positioned.fill(
-            top: MediaQuery.of(context).size.height * 0.35,
-            child: Container(
-              color: Colors.white,
-            ),
-          ),
-          SingleChildScrollView(
-            child: Column(
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Stack(
               children: [
-                const SizedBox(height: 70), // Space above profile image
-                Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 60),
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 24),
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 209, 209, 209),
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 70, 24, 24),
-                          child: Form(
-                            key: _formKey,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _buildFormField(
-                                  title: 'Full names',
-                                  controller: _fullNameController,
-                                ),
-                                _buildFormField(
-                                  title: 'Address',
-                                  controller: _addressController,
-                                ),
-                                _buildFormField(
-                                  title: 'Contact',
-                                  controller: _contactController,
-                                  keyboardType: TextInputType.phone,
-                                ),
-                                _buildFormField(
-                                  title: 'Email',
-                                  controller: _emailController,
-                                  keyboardType: TextInputType.emailAddress,
-                                ),
-                                const SizedBox(height: 20),
-                                SizedBox(
-                                  width: double.infinity,
-                                  height: 50,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      if (_formKey.currentState!.validate()) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text(
-                                                'Profile updated successfully'), // Replace with your desired message
-                                            backgroundColor: Color(0xFF2E7D32),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  color: const Color(0xFF2E7D32),
+                ),
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 70),
+                      Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 60),
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 24),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(24, 70, 24, 24),
+                                child: Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    children: [
+                                      _buildFormField(
+                                        title: 'Full names',
+                                        controller: _fullNameController,
+                                        enabled: _isEditing,
+                                      ),
+                                      _buildFormField(
+                                        title: 'Address',
+                                        controller: _addressController,
+                                        enabled: _isEditing,
+                                      ),
+                                      _buildFormField(
+                                        title: 'Contact',
+                                        controller: _contactController,
+                                        enabled: _isEditing,
+                                        keyboardType: TextInputType.phone,
+                                      ),
+                                      _buildFormField(
+                                        title: 'Email',
+                                        controller: _emailController,
+                                        enabled: false,
+                                      ),
+                                      const SizedBox(height: 20),
+                                      SizedBox(
+                                        width: double.infinity,
+                                        height: 50,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            if (_isEditing) {
+                                              _updateProfile();
+                                            } else {
+                                              setState(() => _isEditing = true);
+                                            }
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: const Color(0xFF2E7D32),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10),
+                                            ),
                                           ),
-                                        );
-                                      }
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xFF2E7D32),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
+                                          child: Text(
+                                            _isEditing ? 'Save Profile' : 'Edit Profile',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                    child: const Text(
-                                      'Edit Profile',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                      if (_isEditing) ...[
+                                        const SizedBox(height: 10),
+                                        SizedBox(
+                                          width: double.infinity,
+                                          height: 50,
+                                          child: OutlinedButton(
+                                            onPressed: () {
+                                              setState(() => _isEditing = false);
+                                              _loadUserData();
+                                            },
+                                            style: OutlinedButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                            child: const Text('Cancel'),
+                                          ),
+                                        ),
+                                      ],
+                                    ],
                                   ),
                                 ),
-                                const SizedBox(height: 20),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                    // Profile Image
-                    Positioned(
-                      top: 0,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
                           Container(
                             width: 100,
                             height: 100,
@@ -180,37 +301,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                           ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: Container(
-                              height: 32,
-                              width: 32,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  width: 2,
-                                  color: Colors.white,
-                                ),
-                                color: const Color(0xFF2E7D32),
-                              ),
-                              child: const Icon(
-                                Icons.edit,
-                                color: Colors.white,
-                                size: 18,
-                              ),
-                            ),
-                          )
                         ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -218,6 +315,7 @@ class _ProfilePageState extends State<ProfilePage> {
     required String title,
     required TextEditingController controller,
     TextInputType? keyboardType,
+    bool enabled = true,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -233,11 +331,12 @@ class _ProfilePageState extends State<ProfilePage> {
         const SizedBox(height: 4),
         TextFormField(
           controller: controller,
+          enabled: enabled,
           keyboardType: keyboardType,
           style: const TextStyle(fontSize: 14),
           decoration: InputDecoration(
             filled: true,
-            fillColor: Colors.grey[100],
+            fillColor: Colors.white,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 12,
               vertical: 12,
@@ -256,6 +355,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 color: Color(0xFF2E7D32),
                 width: 1,
               ),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide.none,
             ),
           ),
         ),

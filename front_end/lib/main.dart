@@ -15,18 +15,17 @@ import './pages/third_page.dart';
 import './pages/nationalparks.dart';
 import './pages/support.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Add Firebase configuration
   await Firebase.initializeApp(
     options: const FirebaseOptions(
-      apiKey: "AIzaSyDmkJcMcwRzphV5_FYBxqhqVv4rnjCCLCA",  // Replace with your Firebase API key
-      appId: "1:2175104588:web:d0aab3fcb5e6cec91266e9",    // Replace with your Firebase App ID
-      messagingSenderId: "2175104588", // Replace with your Messaging Sender ID
-      projectId: "gotorwanda-3b144",    // Replace with your Firebase Project ID
-      authDomain: "gotorwanda-3b144.firebaseapp.com",  // Replace with your Auth Domain
-      storageBucket: "gotorwanda-3b144.firebasestorage.app", // Replace with your Storage Bucket
+      apiKey: "AIzaSyDmkJcMcwRzphV5_FYBxqhqVv4rnjCCLCA",
+      appId: "1:2175104588:web:d0aab3fcb5e6cec91266e9",
+      messagingSenderId: "2175104588",
+      projectId: "gotorwanda-3b144",
+      authDomain: "gotorwanda-3b144.firebaseapp.com",
+      storageBucket: "gotorwanda-3b144.firebasestorage.app",
     ),
   );
   
@@ -62,27 +61,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          
-          if (snapshot.hasError) {
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
-          }
-
-          if (snapshot.hasData) {
-            return const HomePage();
-          }
-
-          return const LandingPage();
-        },
-      ),
+      initialRoute: '/',
       routes: {
+        '/': (context) => const AuthWrapper(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/homepage': (context) => const HomePage(),
@@ -92,6 +73,35 @@ class MyApp extends StatelessWidget {
         '/third_page': (context) => ThirdPage(),
         '/search': (context) => const HomeScreen(),
         '/lake': (context) => const Lake(),
+          '/support': (context) => Support(),
+      },
+    );
+  }
+}
+
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        
+        if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        }
+
+        if (snapshot.hasData) {
+          return const HomePage();
+        }
+
+        return const LandingPage();
       },
     );
   }
