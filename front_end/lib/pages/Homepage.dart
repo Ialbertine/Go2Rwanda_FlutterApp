@@ -22,10 +22,10 @@ class _HomePageState extends State<HomePage> {
   // Pages that will correspond to the BottomNavigationBar items 
   final List<Widget> _pages = [
     const MainContent(),
- contacts
+//  contacts
     Placeholder(), // Search page placeholders
     HomeScreen(), 
- main
+//  main
     ProfilePage(),
   ];
 
