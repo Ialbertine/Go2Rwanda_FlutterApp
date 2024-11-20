@@ -1,8 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Place {
   final String name;
@@ -18,17 +16,6 @@ class Place {
     required this.description,
     this.bookingUrl
   });
-
-  factory Place.fromFirestore(DocumentSnapshot doc) {
-    Map data = doc.data() as Map;
-    return Place(
-      name: data['name'] ?? '',
-      category: data['category'] ?? '',
-      image: data['image'] ?? '',
-      description: data['description'] ?? '',
-      bookingUrl: data['bookingUrl']
-    );
-  }
 }
 
 class SearchScreen extends StatefulWidget {
@@ -55,53 +42,48 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Future<void> _fetchPlaces() async {
-    setState(() => isLoading = true);
-    try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('places')
-          .get();
-
-      setState(() {
-        filteredPlaces = querySnapshot.docs
-            .map((doc) => Place.fromFirestore(doc))
-            .toList();
-        isLoading = false;
-      });
-    } catch (e) {
-      print('Error fetching places: $e');
-      setState(() => isLoading = false);
-    }
+    setState(() {
+      filteredPlaces = [
+        Place(
+          name: 'Sample Place 1', 
+          category: 'Accommodation', 
+          image: 'assets/placeholder.jpg', 
+          description: 'A beautiful accommodation'
+        ),
+        Place(
+          name: 'Sample Place 2', 
+          category: 'National Park', 
+          image: 'assets/placeholder.jpg', 
+          description: 'A scenic national park'
+        ),
+      ];
+      isLoading = false;
+    });
   }
 
-  void _filterPlaces(String query, String category) async {
-    setState(() => isLoading = true);
-
-    Query placesQuery = FirebaseFirestore.instance.collection('places');
-
-    // Apply category filter
-    if (category != 'All') {
-      placesQuery = placesQuery.where('category', isEqualTo: category);
-    }
-
-    try {
-      QuerySnapshot querySnapshot = await placesQuery.get();
-
-      setState(() {
-        filteredPlaces = querySnapshot.docs
-            .map((doc) => Place.fromFirestore(doc))
-            .where((place) {
-          final nameMatch = place.name.toLowerCase().contains(query.toLowerCase());
-          final descriptionMatch = place.description.toLowerCase().contains(query.toLowerCase());
-          
-          return (nameMatch || descriptionMatch);
-        }).toList();
+  void _filterPlaces(String query, String category) {
+    setState(() {
+      filteredPlaces = [
+        Place(
+          name: 'Sample Place 1', 
+          category: 'Accommodation', 
+          image: 'assets/placeholder.jpg', 
+          description: 'A beautiful accommodation'
+        ),
+        Place(
+          name: 'Sample Place 2', 
+          category: 'National Park', 
+          image: 'assets/placeholder.jpg', 
+          description: 'A scenic national park'
+        ),
+      ].where((place) {
+        final nameMatch = place.name.toLowerCase().contains(query.toLowerCase());
+        final descriptionMatch = place.description.toLowerCase().contains(query.toLowerCase());
+        final categoryMatch = category == 'All' || place.category == category;
         
-        isLoading = false;
-      });
-    } catch (e) {
-      print('Error filtering places: $e');
-      setState(() => isLoading = false);
-    }
+        return (nameMatch || descriptionMatch) && categoryMatch;
+      }).toList();
+    });
   }
 
   @override
@@ -268,15 +250,6 @@ class PlaceCard extends StatelessWidget {
     required this.place,
   });
 
-  Future<void> _launchURL() async {
-    final url = place.bookingUrl ?? 'https://www.google.com/travel/hotels';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -295,15 +268,9 @@ class PlaceCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Image.network(
+            Image.asset(
               place.image,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Image.asset(
-                  'assets/placeholder.jpg', 
-                  fit: BoxFit.cover
-                );
-              },
             ),
             Container(
               decoration: BoxDecoration(
@@ -314,7 +281,7 @@ class PlaceCard extends StatelessWidget {
                     Colors.transparent,
                     Colors.black.withOpacity(0.8),
                   ],
-                ),
+                ), 
               ),
             ),
             Padding(
@@ -333,25 +300,22 @@ class PlaceCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  InkWell(
-                    onTap: _launchURL,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF1B5E20),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Text(
-                        'Book',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 0.5,
-                        ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 6,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1B5E20),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Text(
+                      'Book',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 0.5,
                       ),
                     ),
                   ),
