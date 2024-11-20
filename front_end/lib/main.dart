@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
         '/accomodation': (context) => const Accomodation(),
         '/nationalpark': (context) => const Nationalpark(),
         '/third_page': (context) => ThirdPage(),
-        '/search': (context) => const HomeScreen(),
+        '/search': (context) => const SearchScreen(),
         '/lake': (context) => const Lake(),
           '/support': (context) => Support(),
       },

@@ -22,11 +22,8 @@ class _HomePageState extends State<HomePage> {
   // Pages that will correspond to the BottomNavigationBar items 
   final List<Widget> _pages = [
     const MainContent(),
-//  contacts
-    Placeholder(), // Search page placeholders
-    HomeScreen(), 
-//  main
-    ProfilePage(),
+    SearchScreen(), 
+    ProfilePage(),  
   ];
 
   void _onItemTapped(int index) {
@@ -341,7 +338,7 @@ class _CategoryPageWrapperState extends State<CategoryPageWrapper> {
 
   final List<Widget> _pages = [
     const MainContent(),
-    HomeScreen(),
+    SearchScreen(),
     ProfilePage(),
   ];
 
