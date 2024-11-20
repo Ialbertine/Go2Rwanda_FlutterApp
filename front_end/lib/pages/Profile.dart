@@ -24,6 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
   late TextEditingController _emailController;
 
   @override
+
   void initState() {
     super.initState();
     _fullNameController = TextEditingController();

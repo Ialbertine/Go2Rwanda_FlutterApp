@@ -45,15 +45,15 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       filteredPlaces = [
         Place(
-          name: 'Sample Place 1', 
+          name: 'cleo hotel', 
           category: 'Accommodation', 
-          image: 'assets/placeholder.jpg', 
+          image: 'cleo.jpg', 
           description: 'A beautiful accommodation'
         ),
         Place(
-          name: 'Sample Place 2', 
+          name: 'gishwati park', 
           category: 'National Park', 
-          image: 'assets/placeholder.jpg', 
+          image: 'gishwati.jpg', 
           description: 'A scenic national park'
         ),
       ];
@@ -65,15 +65,15 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       filteredPlaces = [
         Place(
-          name: 'Sample Place 1', 
+          name: 'cleo hotel', 
           category: 'Accommodation', 
-          image: 'assets/placeholder.jpg', 
+          image: 'cleo.jpg', 
           description: 'A beautiful accommodation'
         ),
         Place(
-          name: 'Sample Place 2', 
+          name: 'gishwati park', 
           category: 'National Park', 
-          image: 'assets/placeholder.jpg', 
+          image: 'gishwati.jpg', 
           description: 'A scenic national park'
         ),
       ].where((place) {
