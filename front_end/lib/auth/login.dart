@@ -14,7 +14,6 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
@@ -57,19 +56,20 @@ class _LoginPageState extends State<LoginPage> {
     setState(() => _isLoading = true);
 
     try {
-      // Attempt to sign in directly
-      final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+      final UserCredential userCredential =
+          await _auth.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text,
       );
 
-      // If login successful, update last login time in Firestore
       if (userCredential.user != null) {
-        await _firestore.collection('users').doc(userCredential.user!.uid).update({
+        await _firestore
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .update({
           'lastLogin': FieldValue.serverTimestamp(),
         });
 
-        // Navigate to homepage after successful login
         if (mounted) {
           Navigator.pushReplacementNamed(context, '/homepage');
         }
@@ -83,25 +83,11 @@ class _LoginPageState extends State<LoginPage> {
         case 'wrong-password':
           message = 'Incorrect password. Please try again.';
           break;
-        case 'user-disabled':
-          message = 'This account has been disabled. Please contact support.';
-          break;
-        case 'invalid-email':
-          message = 'Invalid email address format.';
-          break;
-        case 'too-many-requests':
-          message = 'Too many failed attempts. Please try again later.';
-          break;
         default:
-          message = 'Login failed. Please check your credentials and try again.';
+          message = 'Login failed. Please try again.';
       }
-      
       if (mounted) {
         _showErrorSnackBar(message);
-      }
-    } catch (e) {
-      if (mounted) {
-        _showErrorSnackBar('An unexpected error occurred. Please try again.');
       }
     } finally {
       if (mounted) {
@@ -110,71 +96,15 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  Future<void> _signInWithGoogle() async {
-    setState(() => _isLoading = true);
-
-    try {
-      // Trigger the Google Sign In process
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) {
-        setState(() => _isLoading = false);
-        return;
-      }
-
-      // Obtain auth details from request
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      
-      // Create credential
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      // Sign in to Firebase with credential
-      final UserCredential userCredential = await _auth.signInWithCredential(credential);
-      final User? user = userCredential.user;
-
-      if (user != null) {
-        // Check if user exists in Firestore
-        final userDoc = await _firestore.collection('users').doc(user.uid).get();
-
-        if (!userDoc.exists) {
-          // Create new user document if it doesn't exist
-          await _firestore.collection('users').doc(user.uid).set({
-            'email': user.email,
-            'displayName': user.displayName,
-            'photoURL': user.photoURL,
-            'createdAt': FieldValue.serverTimestamp(),
-            'lastLogin': FieldValue.serverTimestamp(),
-            'signInMethod': 'google',
-          });
-        } else {
-          // Update existing user's last login
-          await _firestore.collection('users').doc(user.uid).update({
-            'lastLogin': FieldValue.serverTimestamp(),
-            'signInMethod': 'google',
-          });
-        }
-
-        if (mounted) {
-          Navigator.pushReplacementNamed(context, '/homepage');
-        }
-      }
-    } catch (e) {
-      if (mounted) {
-        _showErrorSnackBar('Failed to sign in with Google. Please try again.');
-      }
-    } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
-    }
+  void _navigateToForgotPassword() {
+    Navigator.pushNamed(context, '/forgot-password');
   }
 
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
-    var isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    var isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     return Scaffold(
       body: Stack(
@@ -219,10 +149,6 @@ class _LoginPageState extends State<LoginPage> {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 16,
-                            ),
                           ),
                           validator: _validateEmail,
                         ),
@@ -235,10 +161,6 @@ class _LoginPageState extends State<LoginPage> {
                             prefixIcon: const Icon(Icons.lock_outline),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                            ),
-                            contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 16,
                             ),
                             suffixIcon: IconButton(
                               icon: Icon(
@@ -261,54 +183,37 @@ class _LoginPageState extends State<LoginPage> {
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF2E7D32),
                             padding: const EdgeInsets.symmetric(vertical: 16),
-                            textStyle: const TextStyle(fontSize: 18),
                           ),
                           child: Text(_isLoading ? 'Logging In...' : 'Login'),
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 10),
+                        TextButton(
+                          onPressed: _navigateToForgotPassword,
+                          child: const Text(
+                            'Forgot Password?',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 14,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
                         Row(
                           children: const [
                             Expanded(child: Divider()),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: Text('OR', style: TextStyle(color: Colors.grey)),
+                              child: Text('OR',
+                                  style: TextStyle(color: Colors.grey)),
                             ),
                             Expanded(child: Divider()),
                           ],
                         ),
                         const SizedBox(height: 20),
                         OutlinedButton(
-                          onPressed: _isLoading ? null : _signInWithGoogle,
-                          style: OutlinedButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset('assets/google.png', height: 24),
-                              const SizedBox(width: 8),
-                              const Text('Continue with Google'),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text('Don\'t have an account? '),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/register');
-                              },
-                              child: const Text(
-                                'Register',
-                                style: TextStyle(
-                                  color: Color(0xFF2E7D32),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
+                          onPressed: _isLoading ? null : () {},
+                          child: const Text('Continue with Google'),
                         ),
                       ],
                     ),
@@ -320,9 +225,7 @@ class _LoginPageState extends State<LoginPage> {
           if (_isLoading)
             Container(
               color: Colors.black.withOpacity(0.3),
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
+              child: const Center(child: CircularProgressIndicator()),
             ),
         ],
       ),
