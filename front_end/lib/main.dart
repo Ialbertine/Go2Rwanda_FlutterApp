@@ -4,12 +4,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import './auth/login.dart';
 import './auth/register.dart';
+import 'auth/forgot_password_page.dart';
 import './pages/landingpage.dart';
 import './pages/Homepage.dart';
 import './pages/accomodation.dart';
 import './pages/Profile.dart';
 import './pages/lake.dart';
-import './pages/shoppingDinning.dart';
 import './pages/search_page.dart';
 import './pages/third_page.dart';
 import './pages/nationalparks.dart';
@@ -17,7 +17,7 @@ import './pages/support.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   await Firebase.initializeApp(
     options: const FirebaseOptions(
       apiKey: "AIzaSyDmkJcMcwRzphV5_FYBxqhqVv4rnjCCLCA",
@@ -28,7 +28,7 @@ void main() async {
       storageBucket: "gotorwanda-3b144.firebasestorage.app",
     ),
   );
-  
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -67,13 +67,14 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/homepage': (context) => const HomePage(),
+        '/forgot-password': (context) => const ForgotPasswordPage(),
         '/profile': (context) => const ProfilePage(),
         '/accomodation': (context) => const Accomodation(),
         '/nationalpark': (context) => const Nationalpark(),
         '/third_page': (context) => ThirdPage(),
         '/search': (context) => const SearchScreen(),
         '/lake': (context) => const Lake(),
-          '/support': (context) => Support(),
+        '/support': (context) => Support(),
       },
     );
   }
@@ -90,7 +91,7 @@ class AuthWrapper extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
-        
+
         if (snapshot.hasError) {
           return Center(
             child: Text('Error: ${snapshot.error}'),
