@@ -12,7 +12,20 @@
           "package_name": "com.go2rwanda.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "2175104588-4btuicunh3do96gbncvjgkobimk9qrfb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.go2rwanda.app",
+            "certificate_hash": "c7f0ea76da88bacd5ee1edbac95cdc47b5ece343"
+          }
+        },
+        {
+          "client_id": "2175104588-lgqqb5cade5b99eeosllahku031al7qr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDURUatO3UsmQKRwkTiEzp1W2NcMq1G4PI"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "2175104588-lgqqb5cade5b99eeosllahku031al7qr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "2175104588-46r2270i51oqu1fnc08u1qhufslo7gk1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.frontEnd"
+              }
+            }
+          ]
         }
       }
     }
