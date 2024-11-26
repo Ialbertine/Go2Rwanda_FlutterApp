@@ -44,41 +44,78 @@ class SupportScreen extends StatelessWidget {
       body: Container(
         color: Colors.green,
         width: double.infinity,
-        padding: const EdgeInsets.all(60.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               'Need Support? Talk to us..\nClick the icon to get more info',
-              textAlign: TextAlign.left,
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
               ),
             ),
             SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 90.0, top: 70),
-              // Add margin below the icon
-              child: Icon(
-                Icons.phone_android,
-                size: 60,
-                color: Colors.white,
-              ),
-            ),
-            Divider(
-              color: Colors.white,
-              thickness: 1,
-              indent: 50,
-              endIndent: 50,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 90.0, top: 70),
-              // Add margin below the icon
-              child: Icon(
-                Icons.email,
-                size: 60,
-                color: Colors.white,
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // Handle phone icon click
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Talk to us:'),
+                          content: Text('07 xxx-xx-xx'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: Text('Close'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    child: Icon(
+                      Icons.phone_android,
+                      size: 60,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Divider(
+                    color: Colors.white,
+                    thickness: 1,
+                    indent: 50,
+                    endIndent: 50,
+                  ),
+                  SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () {
+                      // Handle email icon click
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Talk to us:'),
+                          content: Text('Go2rwanda@gmail.com'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: Text('Close'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    child: Icon(
+                      Icons.email,
+                      size: 60,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
