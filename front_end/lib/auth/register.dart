@@ -136,12 +136,14 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  Future<void> _signInWithGoogle() async {
+  Future<GoogleSignInAccount?> _signInWithGoogle() async {
     setState(() => _isLoading = true);
 
     try {
-      final googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) return;
+      final googleUser = await _googleSignIn.signInSilently();
+      if (googleUser == null) {
+        return await _googleSignIn.signIn();
+      }
 
       final googleAuth = await googleUser.authentication;
       final credential = GoogleAuthProvider.credential(
@@ -169,9 +171,10 @@ class _RegisterPageState extends State<RegisterPage> {
             backgroundColor: Colors.green,
           ),
         );
-        Navigator.pushReplacementNamed(context, '/login');
+        Navigator.pushReplacementNamed(context, '/homepage');
       }
     } catch (e) {
+      print('Google Sign-In error: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

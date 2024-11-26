@@ -19,6 +19,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
+    name: 'Go2Rwanda',
     options: const FirebaseOptions(
       apiKey: "AIzaSyDmkJcMcwRzphV5_FYBxqhqVv4rnjCCLCA",
       appId: "1:2175104588:web:d0aab3fcb5e6cec91266e9",
