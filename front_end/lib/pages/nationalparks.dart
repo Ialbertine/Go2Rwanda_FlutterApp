@@ -44,12 +44,12 @@ class _NationalparkState extends State<Nationalpark> {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> hotels = [
-      {'name': 'Cleo Hotel', 'image': 'assets/nyungwe national park.jpg'},
-      {'name': 'Grand Legacy', 'image': 'assets/volcanonational park.jpg'},
-      {'name': 'Lemigo Hotel', 'image': 'assets/gishwati.jpg'},
-      {'name': 'Serena Hotel', 'image': 'assets/akageranational.jpg'},
-      {'name': 'Bethany Hotel', 'image': 'assets/greenybackground.jpg'},
-      {'name': 'Panorama Hotel', 'image': 'assets/gishwati.jpg'},
+      {'name': 'nyungwe', 'image': 'assets/nyungwe national park.jpg'},
+      {'name': 'Volcanoa', 'image': 'assets/volcanonational park.jpg'},
+      {'name': 'Gishwati', 'image': 'assets/gishwati.jpg'},
+      {'name': 'Akagera', 'image': 'assets/akageranational.jpg'},
+      {'name': 'Greeny', 'image': 'assets/greenybackground.jpg'},
+      {'name': 'Gishwati', 'image': 'assets/gishwati.jpg'},
     ];
 
     double screenWidth = MediaQuery.of(context).size.width;

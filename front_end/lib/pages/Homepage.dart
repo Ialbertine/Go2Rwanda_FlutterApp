@@ -19,11 +19,11 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   bool _isMenuOpen = false;
 
-  // Pages that will correspond to the BottomNavigationBar items 
+  // Pages that will correspond to the BottomNavigationBar items
   final List<Widget> _pages = [
     const MainContent(),
-    SearchScreen(), 
-    ProfilePage(),  
+    SearchScreen(),
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -201,17 +201,22 @@ class MainContent extends StatelessWidget {
         const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildCategoryItem(
-                  context, Icons.apartment, 'Accommodation', Accomodation()),
-              _buildCategoryItem(
-                  context, Icons.landscape, 'National Parks', Nationalpark()),
-              _buildCategoryItem(context, Icons.water, 'Lakes', Lake()),
-              _buildCategoryItem(context, Icons.shopping_cart, 'Shopping',
-                  ShoppindAndDinning()),
-            ],
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                _buildCategoryItem(
+                    context, Icons.apartment, 'Accommodation', Accomodation()),
+                SizedBox(width: 16),
+                _buildCategoryItem(
+                    context, Icons.landscape, 'National Parks', Nationalpark()),
+                SizedBox(width: 16),
+                _buildCategoryItem(context, Icons.water, 'Lakes', Lake()),
+                SizedBox(width: 16),
+                _buildCategoryItem(context, Icons.shopping_cart, 'Shopping',
+                    ShoppindAndDinning()),
+              ],
+            ),
           ),
         ),
       ],
@@ -238,17 +243,20 @@ class MainContent extends StatelessWidget {
           color: const Color(0xFFE8F5E9),
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, color: const Color(0xFF4CAF50), size: 20),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: const TextStyle(fontSize: 11),
-              textAlign: TextAlign.center,
-            ),
-          ],
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: const Color(0xFF4CAF50), size: 20),
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: const TextStyle(fontSize: 11),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
         ),
       ),
     );
