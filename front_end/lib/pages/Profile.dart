@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, use_super_parameters
+// ignore_for_file: library_private_types_in_public_api, use_super_parameters, file_names
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -159,6 +159,19 @@ class _ProfilePageState extends State<ProfilePage> {
     super.dispose();
   }
 
+  // logout functionality
+  Future<void> _logout() async {
+  try {
+    await _auth.signOut();
+    if (mounted) {
+      Navigator.of(context).pushReplacementNamed('/login');
+    }
+  } catch (e) {
+    _showErrorSnackBar('Error logging out');
+  }
+}
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,11 +187,25 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         actions: [
-          if (!_isEditing)
-            IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: _deleteProfile,
-            ),
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'logout') {
+                _logout();
+              } else if (value == 'delete') {
+                _deleteProfile();
+              }
+            },
+            itemBuilder: (BuildContext context) => [
+              const PopupMenuItem(
+                value: 'logout',
+                child: Text('Logout'),
+              ),
+              const PopupMenuItem(
+                value: 'delete',
+                child: Text('Delete Account'),
+              ),
+            ],
+          ),
         ],
       ),
       body: _isLoading

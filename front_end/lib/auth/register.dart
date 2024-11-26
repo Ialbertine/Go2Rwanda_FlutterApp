@@ -1,3 +1,5 @@
+// ignore_for_file: use_super_parameters, library_private_types_in_public_api, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,11 +17,11 @@ class _RegisterPageState extends State<RegisterPage> {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
   final _googleSignIn = GoogleSignIn();
-  
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  
+
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
   bool _isLoading = false;
@@ -51,7 +53,8 @@ class _RegisterPageState extends State<RegisterPage> {
       return 'Password must be at least 6 characters';
     }
     // Check for uppercase, lowercase, digit, and special character
-    final regex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$');
+    final regex =
+        RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$');
     if (!regex.hasMatch(value)) {
       return 'Password must contain uppercase, lowercase, digit, and special character';
     }
@@ -93,7 +96,8 @@ class _RegisterPageState extends State<RegisterPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Registration successful! Please login with your credentials.'),
+            content: Text(
+                'Registration successful! Please login with your credentials.'),
             backgroundColor: Colors.green,
           ),
         );
@@ -101,7 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     } on FirebaseAuthException catch (e) {
       String message = 'An error occurred during registration';
-      
+
       switch (e.code) {
         case 'weak-password':
           message = 'The password provided is too weak';
@@ -186,7 +190,8 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     return Scaffold(
       body: Stack(
@@ -249,7 +254,6 @@ class _RegisterPageState extends State<RegisterPage> {
       decoration: InputDecoration(
         labelText: 'Email',
         hintText: 'Enter your email',
-        prefixIcon: const Icon(Icons.email),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
         ),
@@ -269,7 +273,6 @@ class _RegisterPageState extends State<RegisterPage> {
       decoration: InputDecoration(
         labelText: 'Password',
         hintText: 'Enter your password',
-        prefixIcon: const Icon(Icons.lock),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
         ),
@@ -281,7 +284,8 @@ class _RegisterPageState extends State<RegisterPage> {
           icon: Icon(
             _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
           ),
-          onPressed: () => setState(() => _isPasswordVisible = !_isPasswordVisible),
+          onPressed: () =>
+              setState(() => _isPasswordVisible = !_isPasswordVisible),
         ),
       ),
       validator: _validatePassword,
@@ -295,7 +299,6 @@ class _RegisterPageState extends State<RegisterPage> {
       decoration: InputDecoration(
         labelText: 'Confirm Password',
         hintText: 'Confirm your password',
-        prefixIcon: const Icon(Icons.lock_outline),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
         ),
@@ -307,7 +310,8 @@ class _RegisterPageState extends State<RegisterPage> {
           icon: Icon(
             _isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
           ),
-          onPressed: () => setState(() => _isConfirmPasswordVisible = !_isConfirmPasswordVisible),
+          onPressed: () => setState(
+              () => _isConfirmPasswordVisible = !_isConfirmPasswordVisible),
         ),
       ),
       validator: _validateConfirmPassword,

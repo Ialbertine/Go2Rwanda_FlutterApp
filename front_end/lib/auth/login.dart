@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, unused_element
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -100,6 +102,10 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.pushNamed(context, '/forgot-password');
   }
 
+  void _navigateToSignUp() {
+    Navigator.pushNamed(context, '/sign-up');
+  }
+
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -145,7 +151,6 @@ class _LoginPageState extends State<LoginPage> {
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             hintText: 'Enter your email',
-                            prefixIcon: const Icon(Icons.email_outlined),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -158,7 +163,6 @@ class _LoginPageState extends State<LoginPage> {
                           obscureText: !_isPasswordVisible,
                           decoration: InputDecoration(
                             hintText: 'Enter your password',
-                            prefixIcon: const Icon(Icons.lock_outline),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -194,9 +198,34 @@ class _LoginPageState extends State<LoginPage> {
                             style: TextStyle(
                               color: Colors.blue,
                               fontSize: 14,
-                              decoration: TextDecoration.underline,
+                              decoration: TextDecoration.none,
                             ),
                           ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              "Don't have an account? ",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context, '/register');
+                              },
+                              child: const Text(
+                                'Sign up',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.none,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 20),
                         Row(
@@ -211,9 +240,14 @@ class _LoginPageState extends State<LoginPage> {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        OutlinedButton(
+                        OutlinedButton.icon(
                           onPressed: _isLoading ? null : () {},
-                          child: const Text('Continue with Google'),
+                          icon: Image.asset(
+                            'google.png',
+                            width: 20,
+                            height: 20,
+                          ),
+                          label: const Text('Continue with Google'),
                         ),
                       ],
                     ),
