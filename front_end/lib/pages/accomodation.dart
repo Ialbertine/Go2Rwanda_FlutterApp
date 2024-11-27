@@ -44,12 +44,12 @@ class _AccomodationState extends State<Accomodation> {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> hotels = [
-      {'name': 'Cleo Hotel', 'image': 'assets/cleo.jpg'},
-      {'name': 'Grand Legacy', 'image': 'assets/grandlegacy.jpg'},
-      {'name': 'Lemigo Hotel', 'image': 'assets/lemigohotel.webp'},
-      {'name': 'Serena Hotel', 'image': 'assets/Betanyhotel.jpg'},
-      {'name': 'Bethany Hotel', 'image': 'assets/kigaliserena.jpg'},
-      {'name': 'Panorama Hotel', 'image': 'assets/Marriot.jpg'},
+      {'name': 'Cleo Hotel', 'image': 'assets/cleo.jpg', 'url': 'https://www.ubumwegrandehotel.com/?sjrncid=GA_17613199183&sjrnaid=GA_607233709913&gad_source=1&gclid=Cj0KCQiAo5u6BhDJARIsAAVoDWtlrEjFssh9YhSdy7c5fz6e9uoJD-eH0f9MMaXIFiuP7c45nqY791QaAoV1EALw_wcB&gclsrc=aw.ds'},
+      {'name': 'Grand Legacy', 'image': 'assets/grandlegacy.jpg', 'url': 'https://www.marriott.com/reservation/rateListMenu.mi?dclid=CKTqv4j9_IkDFVbpEQgd5JgE0A&gclid=Cj0KCQiAo5u6BhDJARIsAAVoDWuLsJsRbWWcAK-hO5cd5DCnweK8YGrSIaoqe1Vta37yIzqCT4ejwrwaAr7MEALw_wcB'},
+      {'name': 'Lemigo Hotel', 'image': 'assets/lemigohotel.webp', 'url': 'https://www.marriott.com/reservation/rateListMenu.mi?dclid=CKTqv4j9_IkDFVbpEQgd5JgE0A&gclid=Cj0KCQiAo5u6BhDJARIsAAVoDWuLsJsRbWWcAK-hO5cd5DCnweK8YGrSIaoqe1Vta37yIzqCT4ejwrwaAr7MEALw_wcB'},
+      {'name': 'Serena Hotel', 'image': 'assets/Betanyhotel.jpg', 'url': 'https://www.marriott.com/reservation/rateListMenu.mi?dclid=CKTqv4j9_IkDFVbpEQgd5JgE0A&gclid=Cj0KCQiAo5u6BhDJARIsAAVoDWuLsJsRbWWcAK-hO5cd5DCnweK8YGrSIaoqe1Vta37yIzqCT4ejwrwaAr7MEALw_wcB'},
+      {'name': 'Bethany Hotel', 'image': 'assets/kigaliserena.jpg', 'url': 'https://www.bethanyhotel.com'},
+      {'name': 'Panorama Hotel', 'image': 'assets/Marriot.jpg', 'url': 'https://www.panorama-hotel.com'},
     ];
 
     double screenWidth = MediaQuery.of(context).size.width;
@@ -192,6 +192,7 @@ class _AccomodationState extends State<Accomodation> {
                           return HotelCard(
                             name: hotels[index]['name']!,
                             imageUrl: hotels[index]['image']!,
+                            url: hotels[index]['url']!,
                           );
                         },
                       ),
@@ -210,15 +211,16 @@ class _AccomodationState extends State<Accomodation> {
 class HotelCard extends StatelessWidget {
   final String name;
   final String imageUrl;
+  final String url;
 
   const HotelCard({
     super.key,
     required this.name,
     required this.imageUrl,
+    required this.url,
   });
 
   Future<void> _launchURL() async {
-    const url = 'https://www.ubumwegrandehotel.com/?sjrncid=GA_17613199183&sjrnaid=GA_607233709913&gad_source=1&gclid=CjwKCAjwyfe4BhAWEiwAkIL8sGmPlT8PkWsVY7tugVo94NVEaW0v3ULQciFIPxzxY_Y98aEzJ_a6UxoCXl8QAvD_BwE&gclsrc=aw.ds';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

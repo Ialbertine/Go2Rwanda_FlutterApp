@@ -243,7 +243,7 @@ class _LoginPageState extends State<LoginPage> {
                         OutlinedButton.icon(
                           onPressed: _isLoading ? null : () {},
                           icon: Image.asset(
-                            'google.png',
+                            'assets/google.png',
                             width: 20,
                             height: 20,
                           ),

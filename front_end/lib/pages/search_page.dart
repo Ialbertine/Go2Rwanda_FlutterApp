@@ -67,13 +67,13 @@ class _SearchScreenState extends State<SearchScreen> {
         Place(
           name: 'cleo hotel', 
           category: 'Accommodation', 
-          image: 'cleo.jpg', 
+          image: 'assets/cleo.jpg',
           description: 'A beautiful accommodation'
         ),
         Place(
           name: 'gishwati park', 
           category: 'National Park', 
-          image: 'gishwati.jpg', 
+          image: 'assets/gishwati.jpg',
           description: 'A scenic national park'
         ),
       ].where((place) {
