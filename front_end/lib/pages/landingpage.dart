@@ -44,7 +44,7 @@ class LandingPage extends StatelessWidget {
                       'Travel  |  Discover  |  the beauty',
                       style: TextStyle(
                         fontSize: 23, 
-                        color: Colors.white,
+                        color: Colors.white70
                       ),
                     ),
                     SizedBox(height: 70), 

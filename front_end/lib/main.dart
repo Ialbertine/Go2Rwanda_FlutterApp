@@ -13,7 +13,6 @@ import './pages/accomodation.dart';
 import './pages/Profile.dart';
 import './pages/lake.dart';
 import './pages/search_page.dart';
-import './pages/map.dart';
 import './pages/nationalparks.dart';
 import './pages/support.dart';
 
