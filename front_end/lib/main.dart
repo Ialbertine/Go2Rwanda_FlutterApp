@@ -1,7 +1,9 @@
+// ignore_for_file: use_super_parameters
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:front_end/pages/map.dart';
 import './auth/login.dart';
 import './auth/register.dart';
 import 'auth/forgot_password_page.dart';
@@ -11,7 +13,7 @@ import './pages/accomodation.dart';
 import './pages/Profile.dart';
 import './pages/lake.dart';
 import './pages/search_page.dart';
-import './pages/third_page.dart';
+import './pages/map.dart';
 import './pages/nationalparks.dart';
 import './pages/support.dart';
 
@@ -72,7 +74,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const ProfilePage(),
         '/accomodation': (context) => const Accomodation(),
         '/nationalpark': (context) => const Nationalpark(),
-        '/third_page': (context) => ThirdPage(),
+        '/map': (context) => MapPage(),
         '/search': (context) => const SearchScreen(),
         '/lake': (context) => const Lake(),
         '/support': (context) => Support(),

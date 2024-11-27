@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, use_super_parameters, prefer_const_constructors
+// ignore_for_file: library_private_types_in_public_api, use_super_parameters, prefer_const_constructors, unused_element
 
 import 'package:flutter/material.dart';
 import './accomodation.dart';
@@ -36,6 +36,28 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _isMenuOpen = !_isMenuOpen;
     });
+  }
+
+  void _navigateToPage(String route) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      switch (route) {
+        case '/accomodation':
+          return Accomodation();
+        case '/nationalparks':
+          return Nationalpark();
+        case '/lakes':
+          return Lake();
+        case '/shopping':
+          return ShoppindAndDinning();
+        case '/profile':
+          return ProfilePage();
+        case '/search':
+          return SearchScreen();
+        default:
+          return HomePage();
+      }
+    }));
+    _toggleMenu(); // Close menu after navigation
   }
 
   @override
@@ -88,56 +110,50 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildMenuDrawer() {
-    return Container(
-      color: const Color(0xFF025719),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(16),
-            alignment: Alignment.centerRight,
-            child: IconButton(
-              icon: const Text(
-                'X',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+  return Container(
+    color: const Color(0xFF025719),
+    child: Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(16),
+          alignment: Alignment.centerRight,
+          child: IconButton(
+            icon: const Text(
+              'X',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              onPressed: _toggleMenu,
             ),
+            onPressed: _toggleMenu,
           ),
-          _buildMenuItem('Home'),
-          _buildMenuItem('Categories'),
-          _buildMenuItem('Map'),
-          _buildMenuItem('Search'),
-          _buildMenuItem('Profile'),
-          _buildMenuItem('Support'),
-        ],
-      ),
-    );
-  }
+        ),
+         _buildMenuItem('Home', Icons.home, '/homepage'),
+            const Divider(color: Colors.white24, height: 1),
+            _buildMenuItem('Categories', Icons.category, '/accomodation'),
+            const Divider(color: Colors.white24, height: 1),
+            _buildMenuItem('Map', Icons.map, '/map'),
+            const Divider(color: Colors.white24, height: 1),
+            _buildMenuItem('Search', Icons.search, '/search'),
+            const Divider(color: Colors.white24, height: 1),
+            _buildMenuItem('Profile', Icons.person, '/profile'),
+            const Divider(color: Colors.white24, height: 1),
+            _buildMenuItem('Support', Icons.support_agent, '/support'),
+            const Divider(color: Colors.white24, height: 1),
+      ],
+    ),
+  );
+}
 
-  Widget _buildMenuItem(String title) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.white24,
-            width: 1,
-          ),
-        ),
-      ),
-      child: Text(
+  Widget _buildMenuItem(String title, IconData icon, String route) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.white),
+      title: Text(
         title,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-        ),
+        style: const TextStyle(color: Colors.white),
       ),
+      onTap: () => _navigateToPage(route),
     );
   }
 }

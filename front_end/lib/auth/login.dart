@@ -244,8 +244,11 @@ class _LoginPageState extends State<LoginPage> {
                           onPressed: _isLoading ? null : () {},
                           icon: Image.asset(
                             'assets/google.png',
+
                             width: 20,
                             height: 20,
+                            fit: BoxFit
+                                .contain, // Optional: Ensures proper scaling
                           ),
                           label: const Text('Continue with Google'),
                         ),
