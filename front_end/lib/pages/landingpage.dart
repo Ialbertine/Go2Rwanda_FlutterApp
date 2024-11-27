@@ -43,8 +43,8 @@ class LandingPage extends StatelessWidget {
                     Text(
                       'Travel  |  Discover  |  the beauty',
                       style: TextStyle(
-                        fontSize: 22, 
-                        color: Colors.white,
+                        fontSize: 23, 
+                        color: Colors.white70
                       ),
                     ),
                     SizedBox(height: 70), 
@@ -60,7 +60,7 @@ class LandingPage extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15), 
                         ),
                         child: Text(
-                          'Get Started',
+                          'Get Started Here',
                           style: TextStyle(
                             fontSize: 20, 
                           ),

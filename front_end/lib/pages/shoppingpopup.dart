@@ -26,10 +26,7 @@ import 'package:flutter/services.dart';
 //         primarySwatch: Colors.green,
 //         visualDensity: VisualDensity.adaptivePlatformDensity,
 //       ),
-//       home: const shopping(),
-//     );
-//   }
-// }
+// 
 
 class shopping extends StatelessWidget {
   const shopping({super.key});
