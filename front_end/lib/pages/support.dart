@@ -2,10 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(Support());
-}
-
 class Support extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -120,26 +116,7 @@ class SupportScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.green,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white60,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: '',
-          ),
-        ],
-      ),
+      )
     );
   }
 }

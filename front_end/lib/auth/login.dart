@@ -243,9 +243,11 @@ class _LoginPageState extends State<LoginPage> {
                         OutlinedButton.icon(
                           onPressed: _isLoading ? null : () {},
                           icon: Image.asset(
-                            'google.png',
+                            'assets/google.png', // Ensure the path is correct
                             width: 20,
                             height: 20,
+                            fit: BoxFit
+                                .contain, // Optional: Ensures proper scaling
                           ),
                           label: const Text('Continue with Google'),
                         ),

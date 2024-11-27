@@ -91,7 +91,7 @@ class _ShoppindAndDinningState extends State<ShoppindAndDinning> {
             const Divider(color: Colors.white24, height: 1),
             _buildMenuItem('Categories', Icons.category, '/ShoppindAndDinning'),
             const Divider(color: Colors.white24, height: 1),
-            _buildMenuItem('Map', Icons.map, '/third_page'),
+            _buildMenuItem('Map', Icons.map, '/map'),
             const Divider(color: Colors.white24, height: 1),
             _buildMenuItem('Search', Icons.search, '/search'),
             const Divider(color: Colors.white24, height: 1),
