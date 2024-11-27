@@ -44,12 +44,12 @@ class _LakeState extends State<Lake> {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> hotels = [
-      {'name': 'Kivu', 'image': 'assets/rwiza.jpg'},
+      {'name': 'Kivu', 'image': 'assets/i1.jpg'},
       {'name': 'Muhazi', 'image': 'assets/waterfall.jpg'},
-      {'name': 'Ruhondo', 'image': 'assets/lemigohotel.webp'},
+      {'name': 'Ruhondo', 'image': 'assets/i2.jpg'},
       {'name': 'Burera', 'image': 'assets/waterfall.jpg'},
-      {'name': 'Tanganyika', 'image': 'assets/kigaliserena.jpg'},
-      {'name': 'Nyabugogo', 'image': 'assets/Marriot.jpg'},
+      {'name': 'Tanganyika', 'image': 'assets/i3.jpg'},
+      {'name': 'Nyabugogo', 'image': 'assets/i3.jpg'},
     ];
 
     double screenWidth = MediaQuery.of(context).size.width;
@@ -287,15 +287,15 @@ class HotelCard extends StatelessWidget {
                         color: const Color(0xFF1B5E20),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Text(
-                        'Book',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
+                      // child: const Text(
+                      //   'Book',
+                      //   style: TextStyle(
+                      //     color: Colors.white,
+                      //     fontSize: 12,
+                      //     fontWeight: FontWeight.w500,
+                      //     letterSpacing: 0.5,
+                      //   ),
+                      // ),
                     ),
                   ),
                 ],

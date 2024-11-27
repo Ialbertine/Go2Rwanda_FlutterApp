@@ -287,15 +287,15 @@ class HotelCard extends StatelessWidget {
                         color: const Color(0xFF1B5E20),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Text(
-                        'Book',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
+                      // child: const Text(
+                      //   'Book',
+                      //   style: TextStyle(
+                      //     color: Colors.white,
+                      //     fontSize: 12,
+                      //     fontWeight: FontWeight.w500,
+                      //     letterSpacing: 0.5,
+                      //   ),
+                      // ),
                     ),
                   ),
                 ],

@@ -186,10 +186,10 @@ class MainContent extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: Row(
         children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.pop(context),
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.arrow_back, color: Colors.white),
+          //   onPressed: () => Navigator.pop(context),
+          // ),
           const Spacer(),
           IconButton(
             icon: const Icon(Icons.menu, color: Colors.white),
