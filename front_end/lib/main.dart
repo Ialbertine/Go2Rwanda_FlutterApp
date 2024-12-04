@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
         '/homepage': (context) => const HomePage(),
         '/forgot-password': (context) => const ForgotPasswordPage(),
         '/profile': (context) => const ProfilePage(),
-        '/accomodation': (context) => const Accomodation(),
+        '/accomodation': (context) => Accomodation(),
         '/nationalpark': (context) => const Nationalpark(),
         '/map': (context) => MapPage(),
         '/search': (context) => const SearchScreen(),

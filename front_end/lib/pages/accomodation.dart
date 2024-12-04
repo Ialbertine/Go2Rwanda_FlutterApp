@@ -1,5 +1,10 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:front_end/pages/details.dart';
+import 'package:front_end/pages/addaccomodation.dart';
 
 class Accomodation extends StatefulWidget {
   const Accomodation({super.key});
@@ -10,199 +15,69 @@ class Accomodation extends StatefulWidget {
 
 class _AccomodationState extends State<Accomodation> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final CollectionReference accomodationList =
+      FirebaseFirestore.instance.collection('accomodation_list');
 
-  void _navigateToRoute(BuildContext context, String route) {
-    Navigator.pop(context); // Close drawer first
-    if (route.isNotEmpty) {
-      Navigator.pushNamed(context, route);
-    }
-  }
 
-  Widget _buildMenuItem(String title, IconData icon, String route) {
-    return InkWell(
-      onTap: () => _navigateToRoute(context, route),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-        child: Row(
-          children: [
-            Icon(icon, color: Colors.white, size: 24),
-            const SizedBox(width: 24),
-            Text(
-              title,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
-  @override
+  
+
+ @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> hotels = [
-      {'name': 'Cleo Hotel', 'image': 'assets/cleo.jpg', 'url': 'https://www.ubumwegrandehotel.com/?sjrncid=GA_17613199183&sjrnaid=GA_607233709913&gad_source=1&gclid=Cj0KCQiAo5u6BhDJARIsAAVoDWtlrEjFssh9YhSdy7c5fz6e9uoJD-eH0f9MMaXIFiuP7c45nqY791QaAoV1EALw_wcB&gclsrc=aw.ds'},
-      {'name': 'Grand Legacy', 'image': 'assets/grandlegacy.jpg', 'url': 'https://www.marriott.com/reservation/rateListMenu.mi?dclid=CKTqv4j9_IkDFVbpEQgd5JgE0A&gclid=Cj0KCQiAo5u6BhDJARIsAAVoDWuLsJsRbWWcAK-hO5cd5DCnweK8YGrSIaoqe1Vta37yIzqCT4ejwrwaAr7MEALw_wcB'},
-      {'name': 'Lemigo Hotel', 'image': 'assets/lemigohotel.webp', 'url': 'https://www.marriott.com/reservation/rateListMenu.mi?dclid=CKTqv4j9_IkDFVbpEQgd5JgE0A&gclid=Cj0KCQiAo5u6BhDJARIsAAVoDWuLsJsRbWWcAK-hO5cd5DCnweK8YGrSIaoqe1Vta37yIzqCT4ejwrwaAr7MEALw_wcB'},
-      {'name': 'Serena Hotel', 'image': 'assets/Betanyhotel.jpg', 'url': 'https://www.marriott.com/reservation/rateListMenu.mi?dclid=CKTqv4j9_IkDFVbpEQgd5JgE0A&gclid=Cj0KCQiAo5u6BhDJARIsAAVoDWuLsJsRbWWcAK-hO5cd5DCnweK8YGrSIaoqe1Vta37yIzqCT4ejwrwaAr7MEALw_wcB'},
-      {'name': 'Bethany Hotel', 'image': 'assets/kigaliserena.jpg', 'url': 'https://www.bethanyhotel.com'},
-      {'name': 'Panorama Hotel', 'image': 'assets/Marriot.jpg', 'url': 'https://www.panorama-hotel.com'},
-    ];
-
     double screenWidth = MediaQuery.of(context).size.width;
     double cardWidth = (screenWidth - 64) / 2;
 
     return Scaffold(
-      key: _scaffoldKey,
-      endDrawer: Container(
-        width: MediaQuery.of(context).size.width * 0.85,
-        color: const Color(0xFF1B5E20),
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top + 20,
-                right: 20,
-                bottom: 20,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text(
-                      'X',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            _buildMenuItem('Home', Icons.home, '/homepage'),
-            const Divider(color: Colors.white24, height: 1),
-            _buildMenuItem('Categories', Icons.category, '/accomodation'),
-            const Divider(color: Colors.white24, height: 1),
-            _buildMenuItem('Map', Icons.map, '/map'),
-            const Divider(color: Colors.white24, height: 1),
-            _buildMenuItem('Search', Icons.search, '/search'),
-            const Divider(color: Colors.white24, height: 1),
-            _buildMenuItem('Profile', Icons.person, '/profile'),
-            const Divider(color: Colors.white24, height: 1),
-            _buildMenuItem('Support', Icons.support_agent, '/support'),
-            const Divider(color: Colors.white24, height: 1),
-          ],
-        ),
-      ),
-      body: Stack(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.5,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/betanyhotel.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.40,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.black.withOpacity(0.7),
-                  Colors.black.withOpacity(0.5),
-                  Colors.black.withOpacity(0.3),
-                  Colors.transparent,
-                ],
-              ),
-            ),
-          ),
-          SafeArea(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.menu, color: Colors.white, size: 28),
-                        onPressed: () {
-                          _scaffoldKey.currentState?.openEndDrawer();
-                        },
-                      ),
-                    ],
-                  ),
+      appBar: AppBar(
+        title: const Text('Accommodations'),
+        backgroundColor: const Color(0xFF1B5E20),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add, color: Colors.white, size: 28),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddAccomodationPage(),
                 ),
-                const SizedBox(height: 20),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 32.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Accomodations',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: GridView.builder(
-                        padding: EdgeInsets.zero,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: cardWidth / (cardWidth + 20),
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
-                        ),
-                        itemCount: hotels.length,
-                        itemBuilder: (context, index) {
-                          return HotelCard(
-                            name: hotels[index]['name']!,
-                            imageUrl: hotels[index]['image']!,
-                            url: hotels[index]['url']!,
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              );
+            },
           ),
         ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: accomodationList.snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+              return const Center(child: Text('No accommodations available.'));
+            }
+
+            final hotels = snapshot.data!.docs;
+
+            return GridView.builder(
+              padding: EdgeInsets.zero,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: cardWidth / (cardWidth + 20),
+                crossAxisSpacing: 16,
+                mainAxisSpacing: 16,
+              ),
+              itemCount: hotels.length,
+              itemBuilder: (context, index) {
+                final hotel = hotels[index];
+                return HotelCard(
+                  name: hotel['name'],
+                  docId: hotel.id, // Pass document ID for details
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
@@ -210,100 +85,77 @@ class _AccomodationState extends State<Accomodation> {
 
 class HotelCard extends StatelessWidget {
   final String name;
-  final String imageUrl;
-  final String url;
+  final String docId;
 
   const HotelCard({
     super.key,
     required this.name,
-    required this.imageUrl,
-    required this.url,
+    required this.docId,
   });
-
-  Future<void> _launchURL() async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailPage(docId: docId), // Navigate to detail page
           ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Image.asset(
-              imageUrl,
-              fit: BoxFit.cover,
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
             ),
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.center,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.black.withOpacity(0.8),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Image.asset(
+                'assets/cleo.jpg', // Static image
+                fit: BoxFit.cover,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.center,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withOpacity(0.8),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
                   ],
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  InkWell(
-                    onTap: _launchURL,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF1B5E20),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Text(
-                        'Book',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
